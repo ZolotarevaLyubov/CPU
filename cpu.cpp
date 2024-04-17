@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-//commit3
+
 /*
  11 
  101
@@ -131,7 +131,7 @@ using namespace std;
   if(a.size() != b.size())
     throw invalid_argument("error: different size_M");
   else{
-    string res(a.size() + b.size(), '0');
+    string res(a.size(), '0');
     for(int i = b.size() - 1; i >= 0; i--){
         int digit = b.at(i) - '0'; 
         string l = multiply_digit(a,digit);
