@@ -117,8 +117,7 @@ using namespace std;
  }
  
  string shift_left(string num, int shift){
-  string res = num.substr(shift % num.size()) + num.substr(0, shift % num.size());
-  return res;
+  return num.substr(shift % num.size()) + num.substr(0, shift % num.size()) ;
  }
  
 
@@ -141,6 +140,16 @@ using namespace std;
     return res;
     }
     
+ }
+ 
+ string conversion(int num){
+   string binary = "";
+   while(num > 0){
+     int remainder = num % 2;
+     binary = to_string(remainder) + binary;
+     num /= 2;
+   }
+   return binary;
  }
  
  string address_field(string a){
@@ -247,7 +256,8 @@ using namespace std;
   //cout<<substraction("1001","0110")<<endl;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
-  cout<<multiply("0000000000000101","0000000000000011")<<endl;
+  //cout<<multiply("0000000000000101","0000000000000011")<<endl;
   //main_loop();
+  cout<<conversion(14)<<endl;
   return 0;
  }
