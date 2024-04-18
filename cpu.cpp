@@ -143,11 +143,13 @@ using namespace std;
  }
  
  string conversion(int num){
-   string binary = "";
-   while(num > 0){
+   string binary(16, '0');
+   int index = 15;
+   while(num > 0 && index >=0){
      int remainder = num % 2;
-     binary = to_string(remainder) + binary;
+     binary[index] = '0' + remainder;
      num /= 2;
+     index--;
    }
    return binary;
  }
