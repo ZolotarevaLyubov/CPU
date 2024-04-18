@@ -189,7 +189,8 @@ using namespace std;
   arr[2] = "0000000000101010";
   arr[3] = "0000000000001101";
   arr[0] = "0001000000000010";
-  arr[1] = "1000000000000011";
+  //arr[1] = "1000000000000011";
+  arr[1] = "1010000000000011";
   
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
@@ -241,6 +242,8 @@ using namespace std;
   }
   else if(code == "1010"){
     //MUL
+    string address = address_field(instruction_register);
+    accumulator = multiply(read_from_memory(arr, address), accumulator);
   }
   else if(code == "1011"){
     //DIV
@@ -259,7 +262,7 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  //main_loop();
-  cout<<conversion(14)<<endl;
+  main_loop();
+  //cout<<conversion(14)<<endl;
   return 0;
  }
