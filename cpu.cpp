@@ -34,7 +34,7 @@ using namespace std;
   }
  }
  
- string substraction(string a, string b){
+ string subtraction(string a, string b){
   if(a.size() != b.size())
     throw invalid_argument("error: different size_S");
   else{
@@ -142,6 +142,9 @@ using namespace std;
     
  }
  
+ 
+// LISP - 20 + - * / if define, lambda, first,rest, cons, null
+ 
  string conversion(int num){
    string binary(16, '0');
    int index = 15;
@@ -166,6 +169,23 @@ using namespace std;
    return a.substr(0, 4);
  }
  
+ void binary_to_mnemonic(string binary){
+   string operation = operation_field(binary);
+   int num = stoi(address_field(binary), NULL, 2);
+   if(operation == "0000"){cout<<"HALT"<<endl;}
+   else if(operation == "0001"){cout<<"(LOAD"<<" "<<num<<")";}//
+   else if(operation == "0010"){cout<<"(STORE"<<" "<<num<<")";}//
+   else if(operation == "0011"){cout<<"(CALL"<<" "<<num<<")";}
+   else if(operation == "0100"){cout<<"(BR"<<" "<<num<<")";}
+   else if(operation == "0101"){cout<<"(BREQ"<<" "<<num<<")";}
+   else if(operation == "0110"){cout<<"(BRGE"<<" "<<num<<")";}
+   else if(operation == "0111"){cout<<"(BRLT"<<" "<<num<<")";}
+   else if(operation == "1000"){cout<<"(ADD"<<" "<<num<<")";}//
+   else if(operation == "1001"){cout<<"(SUB"<<" "<<num<<")";}//
+   else if(operation == "1010"){cout<<"(MUL"<<" "<<num<<")";}//
+   else if(operation == "1011"){cout<<"(DIV"<<" "<<num<<")";}
+ }
+ 
  string &read_from_memory(string arr[], string program_counter){
    int index = stoi(program_counter, NULL, 2);
    
@@ -186,23 +206,24 @@ using namespace std;
      arr[i] = "0000000000000000";     
   }     
   
-  arr[2] = "0000000000101010";
-  arr[3] = "0000000000001101";
-  arr[0] = "0001000000000010";
+  arr[3] = "0000000000101010"; // 42 
+  arr[4] = "0000000000001101";// 13
+  arr[0] = "0001000000000011";//LOAD 3
   //arr[1] = "1000000000000011";
-  arr[1] = "1010000000000011";
+  arr[1] = "1010000000000100";//MUL 4
+  arr[2] = "0000000000000000";//HALT
   
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
   
-  for( ; ; ){
+  for(int i = 0; i == 0; ){
   instruction_register = read_from_memory(arr, program_counter);
   string code = operation_field(instruction_register);
   
   if(code == "0000"){
     //HALT
-    break;
+    i++;
   }
   else if(code == "0001"){//возьмем поле адреса и значение по этому адресу из памяти, запишем в аккумулятор
     //LOAD
@@ -239,6 +260,8 @@ using namespace std;
   }
   else if(code == "1001"){
     //SUB
+    string address = address_field(instruction_register);
+    accumulator = subtraction(read_from_memory(arr, address), accumulator);
   }
   else if(code == "1010"){
     //MUL
@@ -252,6 +275,11 @@ using namespace std;
    throw logic_error("error: exception");
   }
   program_counter = increment(program_counter);
+  cout<<"IR: "<<instruction_register<<" ";
+  binary_to_mnemonic(instruction_register);
+  
+  cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
+  cout<<"AC: "<<accumulator<<"("<<stoi(accumulator, NULL,2)<<")"<< endl;
   }
   cout<<accumulator<<endl;
  }
