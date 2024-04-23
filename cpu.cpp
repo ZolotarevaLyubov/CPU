@@ -186,6 +186,12 @@ using namespace std;
    else if(operation == "1011"){cout<<"(DIV"<<" "<<num<<")";}
  }
  
+ string highlight_ir(string ir){
+   ir.insert(4, "\033[1;32m");
+   ir.insert(9+4, "\033[0m");
+   return ir;
+ }
+ 
  string &read_from_memory(string arr[], string program_counter){
    int index = stoi(program_counter, NULL, 2);
    
@@ -275,7 +281,7 @@ using namespace std;
    throw logic_error("error: exception");
   }
   program_counter = increment(program_counter);
-  cout<<"IR: "<<instruction_register<<" ";
+  cout<<"IR: "<<highlight_ir(instruction_register)<<" ";
   binary_to_mnemonic(instruction_register);
   
   cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
