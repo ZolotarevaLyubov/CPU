@@ -200,6 +200,11 @@ using namespace std;
    }
    return arr[index];
  }
+ 
+ void br(string program_counter, string address){
+   program_counter = address;//заменяет значение счетчика команд на новое значение, указанное в инструкции, если условие перехода истинно
+ }
+ 
  /*
 0: LOAD 2
 1: ADD 3
@@ -248,6 +253,8 @@ using namespace std;
   }
   else if(code == "0100"){
     //BR
+    string address = address_field(instruction_register);
+    br(program_counter, address);
   }
   else if(code == "0101"){
     //BREQ
