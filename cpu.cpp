@@ -200,7 +200,7 @@ using namespace std;
    }
    return arr[index];
  }
- 
+ //
  void br(string program_counter, string address){
    program_counter = address;//заменяет значение счетчика команд на новое значение, указанное в инструкции, если условие перехода истинно
  }
