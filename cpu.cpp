@@ -145,7 +145,7 @@ using namespace std;
  
 // LISP - 20 + - * / if define, lambda, first,rest, cons, null
  
- string conversion(int num){
+ string decimal_to_binary(int num){
    string binary(16, '0');
    int index = 15;
    while(num > 0 && index >=0){
@@ -156,6 +156,19 @@ using namespace std;
    }
    return binary;
  }
+ 
+  int binary_to_decimal(string binary){
+    int decimal = 0;
+    int power = 1;
+    
+    for(int i = binary.size() - 1; i >= 0; --i){
+       if(binary.at(i) == '1'){
+         decimal += power;
+       }
+    power *= 2;
+    }
+    return decimal;
+  }
  
  string address_field(string a){
    return a.substr(6, 10);   
@@ -205,7 +218,15 @@ using namespace std;
    program_counter = address;//заменяет значение счетчика команд на новое значение, указанное в инструкции, если условие перехода истинно
  }
  
- void breq(){}
+ void breq(string program_counter, string address, string accumulator){
+   if (accumulator == "0000000000000000")
+      program_counter = address;
+ }
+ 
+ void brge(string program_counter, string address, string accumulator){
+   if(stoi(accumulator, NULL, 2) >= 0)
+     program_counter = address;
+ }
  
  /*
 0: LOAD 2
@@ -260,9 +281,13 @@ using namespace std;
   }
   else if(code == "0101"){
     //BREQ
+    string address = address_field(instruction_register);
+    breq(program_counter, address, accumulator);
   }
   else if(code == "0110"){
     //BRGE
+    string address = address_field(instruction_register);
+    brge(program_counter, address, accumulator);
   }
   else if(code == "0111"){
     //BRLT
@@ -305,7 +330,8 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  main_loop();
-  //cout<<conversion(14)<<endl;
+  //main_loop();
+  //cout<<decimal_to_binary(14)<<endl;
+  cout<<binary_to_decimal("101101011")<<endl;
   return 0;
  }
