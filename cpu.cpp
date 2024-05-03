@@ -213,20 +213,7 @@ using namespace std;
    }
    return arr[index];
  }
- //
- void br(string program_counter, string address){
-   program_counter = address;//заменяет значение счетчика команд на новое значение, указанное в инструкции, если условие перехода истинно
- }
  
- void breq(string program_counter, string address, string accumulator){
-   if (accumulator == "0000000000000000")
-      program_counter = address;
- }
- 
- void brge(string program_counter, string address, string accumulator){
-   if(stoi(accumulator, NULL, 2) >= 0)
-     program_counter = address;
- }
  
  /*
 0: LOAD 2
@@ -244,16 +231,39 @@ using namespace std;
   arr[4] = "0000000000001101";// 13
   arr[0] = "0001000000000011";//LOAD 3
   //arr[1] = "1000000000000011";
-  arr[1] = "1010000000000100";//MUL 4
+  arr[1] = "1010010000000100";//MUL 4
   arr[2] = "0000000000000000";//HALT
+  
+  
   
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
   
+  string mar = "0000000000";
+  string mbr = "0000000000000000";
+  
   for(int i = 0; i == 0; ){
   instruction_register = read_from_memory(arr, program_counter);
   string code = operation_field(instruction_register);
+  string code_address_mode_field = address_mode_field(instruction_register);
+  
+  if(code_address_mode_field == "00"){
+    mar = address_field(instruction_register);
+  }
+  else if(code_address_mode_field == "01"){
+    mar = address_field(instruction_register);
+    mbr = "000000" +  mar ;
+    
+  }
+  else if (code_address_mode_field == "10"){
+    cout<<"indexed mode of addressing is not implemented"<<endl;
+  }
+  else if (code_address_mode_field == "11"){
+    mar = address_field(instruction_register);
+    mbr = read_from_memory(arr, mar);
+    mar = address_field(mbr);
+  }
   
   if(code == "0000"){
     //HALT
@@ -261,33 +271,34 @@ using namespace std;
   }
   else if(code == "0001"){//возьмем поле адреса и значение по этому адресу из памяти, запишем в аккумулятор
     //LOAD
-    string address = address_field(instruction_register);
-    string value = read_from_memory(arr, address);
-    accumulator = value;
     
+    if(code_address_mode_field != "01"){
+      mbr = read_from_memory(arr, mar);
+    }
+    accumulator = mbr;
+
   }
   else if(code == "0010"){//берет аккумулятор и записывает его значение туда куда указывает поле адреса
     //STORE
-    string address = address_field(instruction_register);
-    read_from_memory(arr, address) = accumulator;
+    mbr = accumulator;
+    read_from_memory(arr, mar) = mbr;
   }
   else if(code == "0011"){
     //CALL
   }
   else if(code == "0100"){
-    //BR
-    string address = address_field(instruction_register);
-    br(program_counter, address);
+    //BR    
+    program_counter = mar;
   }
   else if(code == "0101"){
-    //BREQ
-    string address = address_field(instruction_register);
-    breq(program_counter, address, accumulator);
+    //BREQ    
+    if (accumulator == "0000000000000000")
+      program_counter = mar;
   }
   else if(code == "0110"){
     //BRGE
-    string address = address_field(instruction_register);
-    brge(program_counter, address, accumulator);
+    if(stoi(accumulator, NULL, 2) >= 0)
+     program_counter = mar;
   }
   else if(code == "0111"){
     //BRLT
@@ -295,18 +306,27 @@ using namespace std;
   else if(code == "1000"){//берет поле адреса, идет в память и получает значение по этому адресу,
   //складывает с аккумулятором и записывает в аккумулятор
     //ADD
-    string address = address_field(instruction_register);
-    accumulator = addition(read_from_memory(arr, address), accumulator);
+    if(code_address_mode_field != "01"){
+      mbr = read_from_memory(arr, mar);
+    }
+    accumulator = addition(accumulator, mbr);
+    
   }
   else if(code == "1001"){
     //SUB
-    string address = address_field(instruction_register);
-    accumulator = subtraction(read_from_memory(arr, address), accumulator);
+    if(code_address_mode_field != "01"){
+      mbr = read_from_memory(arr, mar);
+    }
+    accumulator = subtraction(accumulator, mbr);
+    
   }
   else if(code == "1010"){
     //MUL
-    string address = address_field(instruction_register);
-    accumulator = multiply(read_from_memory(arr, address), accumulator);
+    if(code_address_mode_field != "01"){
+      mbr = read_from_memory(arr, mar);
+    }
+    accumulator = multiply(accumulator, mbr);
+    
   }
   else if(code == "1011"){
     //DIV
@@ -330,8 +350,8 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  //main_loop();
+  main_loop();
   //cout<<decimal_to_binary(14)<<endl;
-  cout<<binary_to_decimal("101101011")<<endl;
+  //cout<<binary_to_decimal("101101011")<<endl;
   return 0;
  }
