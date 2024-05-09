@@ -142,6 +142,23 @@ using namespace std;
     
  }
  
+ string division(string dividend, string divisor){
+   string quotient(dividend.size(), '0');//частное
+   string remainder = dividend;//остаток
+   
+   for(int i = 0; i < dividend.size(); i++){
+      remainder = remainder.substr(1) + dividend.at(i);
+      while(divisor.size() < remainder.size()){
+         divisor = '0' + divisor;
+      }
+      
+      if(remainder >= divisor){
+        remainder = subtraction(remainder, divisor);
+        quotient.at(i) = '1';
+      }
+   }
+   return quotient;
+ }
  
 // LISP - 20 + - * / if define, lambda, first,rest, cons, null
  
@@ -231,17 +248,18 @@ using namespace std;
   arr[4] = "0000000000001101";// 13
   arr[0] = "0001000000000011";//LOAD 3
   //arr[1] = "1000000000000011";
-  //arr[1] = "1010010000000100";//MUL 4
-  //arr[2] = "0000000000000000";//HALT
+  arr[1] = "1010010000000100";//MUL 4
+  arr[2] = "0000000000000000";//HALT
   
   //проверка br,breq,brge
+  /*
   arr[1] = "0100010000001000";
   arr[2] = "0101010000001000";
   arr[5] = "0110010000001000";
   arr[6] = "0000000000000000";
   arr[7] = "0000000000000000";
   arr[8] = "0000000000000000";
-  
+  */
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
@@ -356,7 +374,10 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  main_loop();
+  cout<<division("10101", "11")<<endl;
+  
+  //main_loop();
+  
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   return 0;
