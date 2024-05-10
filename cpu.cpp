@@ -148,9 +148,6 @@ using namespace std;
    
    for(int i = 0; i < dividend.size(); i++){
       remainder = remainder.substr(1) + dividend.at(i);
-      while(divisor.size() < remainder.size()){
-         divisor = '0' + divisor;
-      }
       
       if(remainder >= divisor){
         remainder = subtraction(remainder, divisor);
@@ -233,11 +230,19 @@ using namespace std;
  
  
  /*
-0: LOAD 2
-1: ADD 3
-2: 42 
-3: 13
+0: LOAD   3
+1: ADD  @4
+2: HALT
+3: 42 
+4: 5
+5: 13
 */
+//^[A-Z]+\s+[\$\@]?\d+$
+// B @2
+// AS    @35
+// LOAD 42
+
+
  void main_loop(){
   string arr[1024];
   for(int i = 0; i <= 1024; i++){
@@ -245,11 +250,12 @@ using namespace std;
   }     
   
   arr[3] = "0000000000101010"; // 42 
-  arr[4] = "0000000000001101";// 13
+  arr[5] = "0000000000001101";// 13
   arr[0] = "0001000000000011";//LOAD 3
   //arr[1] = "1000000000000011";
-  arr[1] = "1010010000000100";//MUL 4
+  arr[1] = "1000110000000100";//ADD @4
   arr[2] = "0000000000000000";//HALT
+  arr[4] = "0000000000000101";//
   
   //проверка br,breq,brge
   /*
@@ -374,9 +380,9 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  cout<<division("10101", "11")<<endl;
+  //cout<<division("10101", "11")<<endl;
   
-  //main_loop();
+  main_loop();
   
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
