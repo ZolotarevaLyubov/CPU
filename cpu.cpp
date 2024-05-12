@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <regex>
 using namespace std;
 
 /*
@@ -242,6 +243,11 @@ using namespace std;
 // AS    @35
 // LOAD 42
 
+ string regex_converting(string mnemonic){
+   string pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
+   
+   smatch matches;
+ }
 
  void main_loop(){
   string arr[1024];
