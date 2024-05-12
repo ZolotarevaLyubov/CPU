@@ -247,6 +247,11 @@ using namespace std;
    string pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
    
    smatch matches;
+   if(regex_match(mnemonic, matches, pattern)){
+     string word = matches[1];
+     string symbol = matches[2];
+     string num = matches[3];
+   }
  }
 
  void main_loop(){
