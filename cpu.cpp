@@ -242,7 +242,7 @@ using namespace std;
 // B @2
 // AS    @35
 // LOAD 42
-
+/*
  string regex_converting(string mnemonic){
    string pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
    
@@ -253,7 +253,8 @@ using namespace std;
      string num = matches[3];
    }
  }
-
+ 
+*/
  void main_loop(){
   string arr[1024];
   for(int i = 0; i <= 1024; i++){
