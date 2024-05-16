@@ -248,19 +248,17 @@ using namespace std;
    
    smatch matches;
    if(regex_match(mnemonic, matches, pattern)){
-     string word = matches[1];
+     string command = matches[1];
      string symbol = matches[2];
      string num = matches[3];
    
-     string binary_word;
+     //string binary_word;
      
-     for(char c : word){
-        binary_word += bitset<8>(c).to_string();
-     }
-     string binary_symbol = (symbol == "$") ? "01" : "10";
+     
+     string binary_symbol = (symbol == "$") ? "10" : "01";
      string binary_number = bitset<8>(stoi(num)).to_string();
      
-     return binary_word + " " + binary_symbol + " " + binary_number;
+     return (bitset<8>(command[0])).to_string()+binary_symbol+binary_number;
    }
    else
      return "Error: R_C";
