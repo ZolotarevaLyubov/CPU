@@ -243,8 +243,8 @@ using namespace std;
 // AS    @35
 // LOAD 42
 
- string regex_converting(string mnemonic){
-   string pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
+ string regex_converting(const string &mnemonic){
+   regex pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
    
    smatch matches;
    if(regex_match(mnemonic, matches, pattern)){
@@ -253,7 +253,17 @@ using namespace std;
      string num = matches[3];
    
      string binary_word;
+     
+     for(char c : word){
+        binary_word += bitset<8>(c).to_string();
+     }
+     string binary_symbol = (symbol == "$") ? "01" : "10";
+     string binary_number = bitset<8>(stoi(num)).to_string();
+     
+     return binary_word + " " + binary_symbol + " " + binary_number;
    }
+   else
+     return "Error: R_C";
    
  }
  
@@ -397,8 +407,8 @@ using namespace std;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
   //cout<<division("10101", "11")<<endl;
   
-  main_loop();
-  
+  //main_loop();
+  cout<<regex_converting("LOAD 3")<<endl;
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   return 0;
