@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <unordered_map>
+#include <bitset>
 using namespace std;
 
 /*
@@ -244,6 +246,12 @@ using namespace std;
 // LOAD 42
 
  string regex_converting(const string &mnemonic){
+   unordered_map<string, string> command_map;
+     command_map ["HALT"] = "0000";
+     command_map ["LOAD"] = "0001";
+     command_map ["STORE"] =  "0010";
+   
+ 
    regex pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
    
    smatch matches;
@@ -254,11 +262,12 @@ using namespace std;
    
      //string binary_word;
      
-     
+     string binary_command = command_map[command];
+     //string binary_command = bitset<4>(command[0]).to_string();
      string binary_symbol = (symbol == "$") ? "10" : "01";
-     string binary_number = bitset<8>(stoi(num)).to_string();
+     string binary_number = bitset<10>(stoi(num)).to_string();
      
-     return (bitset<8>(command[0])).to_string()+binary_symbol+binary_number;
+     return binary_command + binary_symbol + binary_number;
    }
    else
      return "Error: R_C";
