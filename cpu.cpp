@@ -5,6 +5,7 @@
 #include <bitset>
 using namespace std;
 
+
 /*
  11 
  101
