@@ -251,8 +251,16 @@ using namespace std;
      command_map ["HALT"] = "0000";
      command_map ["LOAD"] = "0001";
      command_map ["STORE"] =  "0010";
+     command_map ["CALL"] = "0011";
+     command_map ["BR"] = "0100";
+     command_map ["BREQ"] = "0101";
+     command_map ["BRGE"] = "0110";
+     command_map ["BRLT"] = "0111";
+     command_map ["ADD"] = "1000";
+     command_map ["SUB"] = "1001";
+     command_map ["MUL"] = "1010";
+     command_map ["DIV"] = "1011";
    
- 
    regex pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
    
    smatch matches;
@@ -265,7 +273,14 @@ using namespace std;
      
      string binary_command = command_map[command];
      //string binary_command = bitset<4>(command[0]).to_string();
-     string binary_symbol = (symbol == "$") ? "10" : "01";
+     //string binary_symbol = (symbol == "$") ? "10" : "01";
+     string binary_symbol;
+     if(symbol == "$")
+       binary_symbol = "10";
+     else if(symbol == "@")
+       binary_symbol = "11";
+     else 
+       binary_symbol = "00";    
      string binary_number = bitset<10>(stoi(num)).to_string();
      
      return binary_command + binary_symbol + binary_number;
@@ -416,7 +431,7 @@ using namespace std;
   //cout<<division("10101", "11")<<endl;
   
   //main_loop();
-  cout<<regex_converting("LOAD 3")<<endl;
+  cout<<regex_converting("ADD @4")<<endl;
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   return 0;
