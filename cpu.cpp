@@ -262,34 +262,52 @@ using namespace std;
      command_map ["DIV"] = "1011";
    
    regex pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
+   regex pattern_without_operand("^([A-Z]+)$");
    
    smatch matches;
    if(regex_match(mnemonic, matches, pattern)){
-     string command = matches[1];
-     string symbol = matches[2];
-     string num = matches[3];
+        string command = matches[1];
+        string symbol = matches[2];
+        string num = matches[3];
    
      //string binary_word;
      
-     string binary_command = command_map[command];
+        string binary_command = command_map[command];
      //string binary_command = bitset<4>(command[0]).to_string();
      //string binary_symbol = (symbol == "$") ? "10" : "01";
-     string binary_symbol;
-     if(symbol == "$")
-       binary_symbol = "10";
-     else if(symbol == "@")
-       binary_symbol = "11";
-     else 
-       binary_symbol = "00";    
-     string binary_number = bitset<10>(stoi(num)).to_string();
+        string binary_symbol;
+        
+        if(symbol == "$")
+           binary_symbol = "10";
+        else if(symbol == "@")
+           binary_symbol = "11";
+        else 
+           binary_symbol = "00";    
+           
+        string binary_number = bitset<10>(stoi(num)).to_string();
      
-     return binary_command + binary_symbol + binary_number;
+        return binary_command + binary_symbol + binary_number;
    }
-   else
-     return "Error: R_C";
+   //HALT
+   else if(regex_match(mnemonic, matches, pattern_without_operand)){
+          string command = matches[1];
+      
+          if(command == "HALT"){
+             return "0000000000000000";
+           } 
+   }
+   
+          return "Error: R_C";
    
  }
  
+ void load_program_from_file(const string &filename, vector<string> &memory){
+     ifstream file("mnemonic.txt");
+     if(!file.is_open())
+       cout<<"error: load_program_from_file"<<endl;
+       
+       
+ }
 
  void main_loop(){
   string arr[1024];
@@ -431,7 +449,7 @@ using namespace std;
   //cout<<division("10101", "11")<<endl;
   
   //main_loop();
-  cout<<regex_converting("ADD @4")<<endl;
+  cout<<regex_converting("HALT")<<endl;
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   return 0;
