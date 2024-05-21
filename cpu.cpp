@@ -246,6 +246,8 @@ using namespace std;
 // B @2
 // AS    @35
 // LOAD 42
+// DATA 13,42,666     -> "13","42","666"
+
 
  string regex_converting(const string &mnemonic){
    unordered_map<string, string> command_map;
@@ -302,8 +304,8 @@ using namespace std;
    
  }
  
- void load_program_from_file(const string &filename, vector<string> &memory){
-     ifstream file("mnemonic.txt");
+ void load_program_from_file(const char *filename, vector<string> &memory){
+     ifstream file(filename);
      if(!file.is_open())
        cout<<"error: load_program_from_file"<<endl;
        
@@ -311,6 +313,7 @@ using namespace std;
      int address = 0;  //текущий адрес в памяти
      
      while(getline(file,line)){
+     //DATA
        string machine_code = regex_converting(line);
        memory[address++] = machine_code;
      }
@@ -448,7 +451,7 @@ using namespace std;
   cout<<accumulator<<endl;
  }
  
- int main(){
+ int main( int length, char *filename[]){
   //cout<<addition("0011", "0111")<<endl;
   //cout<<substraction("1001","0110")<<endl;
   //cout<<increment("1011")<<endl;
@@ -459,12 +462,17 @@ using namespace std;
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
+  
   vector<string>memory(1024, "0000000000000000");
-  load_program_from_file("mnemonic.txt", memory);
-  for(int i = 0; i < 16; i++){
+  load_program_from_file(filename[1], memory);
+  for(int i = 0; i < 5; i++){
      cout<<memory[i]<<endl;
   }
-  
+  /*
+  for(int i = 0; i < length; i++){
+     cout<<filename[i]<<endl;
+  } 
+  */    
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   return 0;
