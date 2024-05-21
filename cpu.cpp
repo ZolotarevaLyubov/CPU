@@ -3,6 +3,7 @@
 #include <regex>
 #include <unordered_map>
 #include <bitset>
+#include <fstream>
 using namespace std;
 
 
@@ -306,7 +307,14 @@ using namespace std;
      if(!file.is_open())
        cout<<"error: load_program_from_file"<<endl;
        
-       
+     string line;//текущая строка
+     int address = 0;  //текущий адрес в памяти
+     
+     while(getline(file,line)){
+       string machine_code = regex_converting(line);
+       memory[address++] = machine_code;
+     }
+     file.close();
  }
 
  void main_loop(){
@@ -449,7 +457,14 @@ using namespace std;
   //cout<<division("10101", "11")<<endl;
   
   //main_loop();
-  cout<<regex_converting("HALT")<<endl;
+  //cout<<regex_converting("HALT")<<endl;
+  
+  vector<string>memory(1024, "0000000000000000");
+  load_program_from_file("mnemonic.txt", memory);
+  for(int i = 0; i < 16; i++){
+     cout<<memory[i]<<endl;
+  }
+  
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   return 0;

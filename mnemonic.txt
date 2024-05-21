@@ -1,0 +1,3 @@
+LOAD 3
+ADD @4
+HALT
