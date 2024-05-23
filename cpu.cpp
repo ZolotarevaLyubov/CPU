@@ -306,7 +306,12 @@ using namespace std;
  
  vector<int> parse_data_line(const string &data_line){
  
- 
+   regex pattern("^DATA\\s+((\\d+)(\\s*,\\s*\\d+)*)$");
+   smatch matches;
+   
+   if(regex_match(data_line, matches, pattern)){
+     string data_part = matches[1];
+   }
  }
  
  void load_program_from_file(const char *filename, vector<string> &memory){
