@@ -304,6 +304,11 @@ using namespace std;
    
  }
  
+ vector<int> parse_data_line(const string &data_line){
+ 
+ 
+ }
+ 
  void load_program_from_file(const char *filename, vector<string> &memory){
      ifstream file(filename);
      if(!file.is_open())
