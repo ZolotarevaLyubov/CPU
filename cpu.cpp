@@ -304,14 +304,29 @@ using namespace std;
    
  }
  
- vector<int> parse_data_line(const string &data_line){
  
-   regex pattern("^DATA\\s+((\\d+)(\\s*,\\s*\\d+)*)$");
-   smatch matches;
+ //"12,42,67" -> "12","42","67"
+ 
+ 
+ 
+ vector<string> split_string(const string &str){
    
-   if(regex_match(data_line, matches, pattern)){
-     string data_part = matches[1];
-   }
+  vector<string> res;
+  string buffer;
+  
+  for(char c : str){
+     if(c == ','){
+       res.push_back(buffer);
+       buffer.clear();
+     }
+     else{
+       buffer += c;
+     }
+  }
+  if(!buffer.empty()){
+    res.push_back(buffer);
+  }
+  return res;
  }
  
  void load_program_from_file(const char *filename, vector<string> &memory){
@@ -321,9 +336,12 @@ using namespace std;
        
      string line;//текущая строка
      int address = 0;  //текущий адрес в памяти
+     regex find_data("^(DATA\\s)");
      
      while(getline(file,line)){
      //DATA
+       smatch match;
+       if()
        string machine_code = regex_converting(line);
        memory[address++] = machine_code;
      }
@@ -472,12 +490,13 @@ using namespace std;
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
-  
+  /*
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   for(int i = 0; i < 5; i++){
      cout<<memory[i]<<endl;
   }
+  */
   /*
   for(int i = 0; i < length; i++){
      cout<<filename[i]<<endl;
@@ -485,5 +504,12 @@ using namespace std;
   */    
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
+  
+  vector<string> res = split_string("1,2,3,4,5");
+  for(int i = 0; i < 5; i++){
+     cout<<res[i]<<endl;
+  }
+  
+  
   return 0;
  }
