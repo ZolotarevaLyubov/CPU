@@ -341,9 +341,20 @@ using namespace std;
      while(getline(file,line)){
      //DATA
        smatch match;
-       if()
-       string machine_code = regex_converting(line);
-       memory[address++] = machine_code;
+       if(regex_search(line, match,find_data)){
+         string data_part = line.erase(0,5);
+         vector<string> numbers = split_string(data_part);
+         
+         for(int i = 0; i < numbers.size(); i++){
+            int num = stoi(numbers[i]);
+            string machine_code = decimal_to_binary(num);
+            memory[address++] = machine_code;
+         }
+       }
+       else{
+           string machine_code = regex_converting(line);
+           memory[address++] = machine_code;
+       }       
      }
      file.close();
  }
@@ -490,13 +501,15 @@ using namespace std;
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
-  /*
+  
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
-  for(int i = 0; i < 5; i++){
-     cout<<memory[i]<<endl;
+  for(int i = 0; i < 10; i++){
+     if(!memory[i].empty()){
+        cout<<memory[i]<<endl;
+     }
   }
-  */
+  
   /*
   for(int i = 0; i < length; i++){
      cout<<filename[i]<<endl;
@@ -505,11 +518,12 @@ using namespace std;
   //cout<<decimal_to_binary(14)<<endl;
   //cout<<binary_to_decimal("101101011")<<endl;
   
+  /*
   vector<string> res = split_string("1,2,3,4,5");
   for(int i = 0; i < 5; i++){
      cout<<res[i]<<endl;
   }
-  
+  */
   
   return 0;
  }
