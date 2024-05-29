@@ -359,8 +359,9 @@ using namespace std;
      file.close();
  }
 
- void main_loop(){
+ void main_loop(vector<string> &memory){
   string arr[1024];
+  /*
   for(int i = 0; i <= 1024; i++){
      arr[i] = "0000000000000000";     
   }     
@@ -374,7 +375,7 @@ using namespace std;
   arr[4] = "0000000000000101";//
   
   //проверка br,breq,brge
-  /*
+  
   arr[1] = "0100010000001000";
   arr[2] = "0101010000001000";
   arr[5] = "0110010000001000";
@@ -382,6 +383,7 @@ using namespace std;
   arr[7] = "0000000000000000";
   arr[8] = "0000000000000000";
   */
+  
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
@@ -390,7 +392,7 @@ using namespace std;
   string mbr = "0000000000000000";
   
   for(int i = 0; i == 0; ){
-  instruction_register = read_from_memory(arr, program_counter);
+  instruction_register = read_from_memory(memory, program_counter);//
   string code = operation_field(instruction_register);
   string code_address_mode_field = address_mode_field(instruction_register);
   
@@ -407,7 +409,7 @@ using namespace std;
   }
   else if (code_address_mode_field == "11"){
     mar = address_field(instruction_register);
-    mbr = read_from_memory(arr, mar);
+    mbr = read_from_memory(memory, mar);//
     mar = address_field(mbr);
   }
   
@@ -419,7 +421,7 @@ using namespace std;
     //LOAD
     
     if(code_address_mode_field != "01"){
-      mbr = read_from_memory(arr, mar);
+      mbr = read_from_memory(memory, mar);//
     }
     accumulator = mbr;
 
@@ -427,7 +429,7 @@ using namespace std;
   else if(code == "0010"){//берет аккумулятор и записывает его значение туда куда указывает поле адреса
     //STORE
     mbr = accumulator;
-    read_from_memory(arr, mar) = mbr;
+    read_from_memory(memory, mar) = mbr;//
   }
   else if(code == "0011"){
     //CALL
@@ -453,7 +455,7 @@ using namespace std;
   //складывает с аккумулятором и записывает в аккумулятор
     //ADD
     if(code_address_mode_field != "01"){
-      mbr = read_from_memory(arr, mar);
+      mbr = read_from_memory(memory, mar);//
     }
     accumulator = addition(accumulator, mbr);
     
@@ -461,7 +463,7 @@ using namespace std;
   else if(code == "1001"){
     //SUB
     if(code_address_mode_field != "01"){
-      mbr = read_from_memory(arr, mar);
+      mbr = read_from_memory(memory, mar);//
     }
     accumulator = subtraction(accumulator, mbr);
     
@@ -469,7 +471,7 @@ using namespace std;
   else if(code == "1010"){
     //MUL
     if(code_address_mode_field != "01"){
-      mbr = read_from_memory(arr, mar);
+      mbr = read_from_memory(memory, mar);//
     }
     accumulator = multiply(accumulator, mbr);
     
@@ -504,11 +506,14 @@ using namespace std;
   
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
+  main_loop(memory);
+  /*
   for(int i = 0; i < 10; i++){
      if(!memory[i].empty()){
         cout<<memory[i]<<endl;
      }
   }
+  */
   //тест
   /*
   for(int i = 0; i < length; i++){
