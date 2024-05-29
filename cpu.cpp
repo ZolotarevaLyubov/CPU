@@ -224,13 +224,13 @@ using namespace std;
    return ir;
  }
  
- string &read_from_memory(string arr[], string program_counter){
+ string &read_from_memory(vector<string> &memory, string program_counter){//
    int index = stoi(program_counter, NULL, 2);
    
    if(index < 0 || index >= 1024){
      throw invalid_argument("error: program counter is out of range");
    }
-   return arr[index];
+   return memory[index];
  }
  
  
