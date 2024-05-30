@@ -507,13 +507,13 @@ using namespace std;
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
-  /*
+  
   for(int i = 0; i < 10; i++){
      if(!memory[i].empty()){
         cout<<memory[i]<<endl;
      }
   }
-  */
+  
   //тест
   /*
   for(int i = 0; i < length; i++){
