@@ -264,7 +264,7 @@ using namespace std;
      command_map ["MUL"] = "1010";
      command_map ["DIV"] = "1011";
    
-   regex pattern("^([A-Z]+)\\s+([\\$\\@]?)(\\d)+$");   
+   regex pattern("^([A-Z]+)\\s+([$@=]?)(\\d)+$");   
    regex pattern_without_operand("^([A-Z]+)$");
    
    smatch matches;
@@ -278,18 +278,26 @@ using namespace std;
         string binary_command = command_map[command];
      //string binary_command = bitset<4>(command[0]).to_string();
      //string binary_symbol = (symbol == "$") ? "10" : "01";
-        string binary_symbol;
+        string address_mode_binary;
         
         if(symbol == "$")
-           binary_symbol = "10";
+           address_mode_binary = "10";
         else if(symbol == "@")
-           binary_symbol = "11";
+           address_mode_binary = "11";
+        else if (symbol == "=")
+           address_mode_binary = "01";
         else 
-           binary_symbol = "00";    
+           address_mode_binary = "00";    
            
         string binary_number = bitset<10>(stoi(num)).to_string();
-     
-        return binary_command + binary_symbol + binary_number;
+        
+        cout<<"(r_c)command: "<<command<<endl;
+        cout<<"(r_c)symbol: "<<symbol<<endl; 
+        cout<<"(r_c)num: "<<num<<endl;
+        
+        cout<<"(r_c)result: "<<binary_command+address_mode_binary+binary_number<<endl;
+        
+        return binary_command + address_mode_binary + binary_number;
    }
    //HALT
    else if(regex_match(mnemonic, matches, pattern_without_operand)){
@@ -349,6 +357,8 @@ using namespace std;
             int num = stoi(numbers[i]);
             string machine_code = decimal_to_binary(num);
             memory[address++] = machine_code;
+            cout<<"numbers: "<<numbers[i]<<endl;
+            cout<<"machine_code: "<<machine_code<<endl;
          }
        }
        else{
@@ -360,7 +370,7 @@ using namespace std;
  }
 
  void main_loop(vector<string> &memory){
-  string arr[1024];
+//  string arr[1024];
   /*
   for(int i = 0; i <= 1024; i++){
      arr[i] = "0000000000000000";     
@@ -489,7 +499,7 @@ using namespace std;
   cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
   cout<<"AC: "<<accumulator<<"("<<stoi(accumulator, NULL,2)<<")"<< endl;
   }
-  cout<<accumulator<<endl;
+  cout<<"accumulator: "<<accumulator<<endl;
  }
  
  int main( int length, char *filename[]){
@@ -529,6 +539,6 @@ using namespace std;
      cout<<res[i]<<endl;
   }
   */
-  
+  for(int i=5000000; ; i+=40000){cout<<i<<endl;}
   return 0;
  }
