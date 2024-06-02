@@ -539,6 +539,6 @@ using namespace std;
      cout<<res[i]<<endl;
   }
   */
-  for(int i=5000000; ; i+=40000){cout<<i<<endl;}
+  
   return 0;
  }
