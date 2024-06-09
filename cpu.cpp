@@ -149,20 +149,23 @@ using namespace std;
  
  string division(string dividend, string divisor){
    string quotient(dividend.size(), '0');//частное
-   string remainder = dividend;//остаток
+   //string remainder = dividend;//остаток
+   string remainder = dividend.substr(0, divisor.size() - 1);
    
    for(int i = 0; i < dividend.size(); i++){
+      //remainder += dividend[i];
       remainder = remainder.substr(1) + dividend.at(i);
       
-      while(remainder.size() < dividend.size()){
-         remainder = "0" + remainder;
-      }
+     
       
       if(remainder >= divisor){
         remainder = subtraction(remainder, divisor);
-        quotient.at(i) = '1';
+        //quotient.at(i) = '1';
+        quotient[i - (divisor.size() - 1)] = '1';
       }
+     
    }
+   
    return quotient;
  }
  
