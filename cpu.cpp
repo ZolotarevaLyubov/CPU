@@ -154,6 +154,10 @@ using namespace std;
    for(int i = 0; i < dividend.size(); i++){
       remainder = remainder.substr(1) + dividend.at(i);
       
+      while(remainder.size() < dividend.size()){
+         remainder = "0" + remainder;
+      }
+      
       if(remainder >= divisor){
         remainder = subtraction(remainder, divisor);
         quotient.at(i) = '1';
@@ -508,12 +512,12 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  //cout<<division("10101", "11")<<endl;
+  cout<<division("10101", "11")<<endl;
   
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
-  
+  /*
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
@@ -523,6 +527,7 @@ using namespace std;
         cout<<memory[i]<<endl;
      }
   }
+  */
   
   //тест
   /*
