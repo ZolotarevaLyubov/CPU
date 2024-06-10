@@ -149,19 +149,22 @@ using namespace std;
  
  string division(string dividend, string divisor){
    string quotient(dividend.size(), '0');//частное
-   //string remainder = dividend;//остаток
-   string remainder = dividend.substr(0, divisor.size() - 1);
+   string remainder = dividend;//остаток
+   //string remainder = dividend.substr(0, divisor.size() - 1);
    
    for(int i = 0; i < dividend.size(); i++){
       //remainder += dividend[i];
       remainder = remainder.substr(1) + dividend.at(i);
       
-     
+      if(remainder.size() < divisor.size()){
+        int shift_amount = divisor.size() - remainder.size();
+        shift_left(remainder, remainder.size() - shift_amount);
+      }
       
       if(remainder >= divisor){
         remainder = subtraction(remainder, divisor);
-        //quotient.at(i) = '1';
-        quotient[i - (divisor.size() - 1)] = '1';
+        quotient.at(i) = '1';
+        //quotient[i - (divisor.size() - 1)] = '1';
       }
      
    }
@@ -515,7 +518,7 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  cout<<division("10101", "11")<<endl;
+  cout<<division("1001", "0011")<<endl;
   
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
