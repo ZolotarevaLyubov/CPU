@@ -171,7 +171,19 @@ using namespace std;
    
    return quotient;
  }
- //
+ 
+ string factorial(string num){
+   string result = "1";
+   string counter = "1";
+   //string one = "1";
+   
+   while(counter != increment(num)){
+     result = multiply(result, counter);
+     counter = increment(counter);
+   }
+   return result;
+ }
+ 
 // LISP - 20 + - * / if define, lambda, first,rest, cons, null
  
  string decimal_to_binary(int num){
@@ -379,6 +391,22 @@ using namespace std;
      file.close();
  }
 
+ void process_file(const char*  filename){
+   ifstream file(filename);
+   if (!file.is_open()){
+      cerr << "unable to open file(error: process_file)"<<endl;
+      return;
+   }
+   string line;
+   while(getline(file, line)){
+      if(line[0] == '*'){
+        continue;
+      }
+      cout<<regex_converting(line)<<endl;
+   }
+   file.close();
+ }
+
  void main_loop(vector<string> &memory){
 //  string arr[1024];
   /*
@@ -518,10 +546,13 @@ using namespace std;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
-  cout<<division("1001", "0011")<<endl;
+  //cout<<division("1001", "0011")<<endl;
+  cout<<factorial("0010")<<endl;
   
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
+  
+  //process_file(filename[1]);
   
   /*
   vector<string>memory(1024, "0000000000000000");

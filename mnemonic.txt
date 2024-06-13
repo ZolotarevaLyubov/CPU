@@ -1,4 +1,5 @@
 LOAD 3
 ADD 4
 HALT
+*dlskfndclsd
 DATA 5,6
