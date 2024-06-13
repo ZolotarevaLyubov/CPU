@@ -173,8 +173,8 @@ using namespace std;
  }
  
  string factorial(string num){
-   string result = "1";
-   string counter = "1";
+   string result = "0001";
+   string counter = "0001";
    //string one = "1";
    
    while(counter != increment(num)){
@@ -547,14 +547,14 @@ using namespace std;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
   //cout<<division("1001", "0011")<<endl;
-  cout<<factorial("0010")<<endl;
+  //cout<<factorial("0001000")<<endl;
   
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
   //process_file(filename[1]);
   
-  /*
+  
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
@@ -564,7 +564,7 @@ using namespace std;
         cout<<memory[i]<<endl;
      }
   }
-  */
+  
   
   //тест
   /*
