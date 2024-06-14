@@ -13,9 +13,20 @@ using namespace std;
 + 11
 ----
 1000
+
+
+11111111
+10111001
+--------
+01000110 
+
 */ 
  
 // "101"  "011"
+// "100" + "100" -> "1000"
+                 //-> "000"
+
+
  string addition(string a, string b){
   if(a.size() != b.size())
     throw invalid_argument("error: different size_A");
@@ -172,17 +183,6 @@ using namespace std;
    return quotient;
  }
  
- string factorial(string num){
-   string result = "0001";
-   string counter = "0001";
-   //string one = "1";
-   
-   while(counter != increment(num)){
-     result = multiply(result, counter);
-     counter = increment(counter);
-   }
-   return result;
- }
  
 // LISP - 20 + - * / if define, lambda, first,rest, cons, null
  
@@ -210,6 +210,21 @@ using namespace std;
     }
     return decimal;
   }
+ 
+ string complement_code(string a){
+   string res = a;
+   
+   for(int i = res.size() - 1; i >= 0; i--){
+      if(res.at(i) == '0'){
+        res.at(i) = '1';
+      }
+      else
+        res.at(i) = '0';
+   }
+   
+   
+   return increment(res);
+ }
  
  string address_field(string a){
    return a.substr(6, 10);   
@@ -542,19 +557,25 @@ using namespace std;
  
  int main( int length, char *filename[]){
   //cout<<addition("0011", "0111")<<endl;
-  //cout<<substraction("1001","0110")<<endl;
+  //cout<<addition("100","100")<<endl;
   //cout<<increment("1011")<<endl;
   //cout<<decrement("1100")<<endl;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
+  string a = decimal_to_binary(373);
+  string b = decimal_to_binary(185);
+  string res = addition(a, complement_code(b));
+  cout<<"binary_res: "<<res<<endl;
+  cout<<"decimal_res: "<<binary_to_decimal(res)<<endl;
+  
   
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
   //process_file(filename[1]);
   
-  
+  /*
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
@@ -564,7 +585,7 @@ using namespace std;
         cout<<memory[i]<<endl;
      }
   }
-  
+  */
   
   //тест
   /*
