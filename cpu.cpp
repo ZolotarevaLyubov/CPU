@@ -221,8 +221,7 @@ using namespace std;
       else
         res.at(i) = '0';
    }
-   
-   
+    
    return increment(res);
  }
  
