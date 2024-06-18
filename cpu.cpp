@@ -562,19 +562,20 @@ using namespace std;
   //cout<<multiply("0000000000000101","0000000000000011")<<endl;
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
+  /*
   string a = decimal_to_binary(373);
   string b = decimal_to_binary(185);
   string res = addition(a, complement_code(b));
   cout<<"binary_res: "<<res<<endl;
   cout<<"decimal_res: "<<binary_to_decimal(res)<<endl;
-  
+  */
   
   //main_loop();
   //cout<<regex_converting("HALT")<<endl;
   
   //process_file(filename[1]);
   
-  /*
+  
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
@@ -584,7 +585,7 @@ using namespace std;
         cout<<memory[i]<<endl;
      }
   }
-  */
+  
   
   //тест
   /*
