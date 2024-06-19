@@ -300,7 +300,7 @@ using namespace std;
      command_map ["MUL"] = "1010";
      command_map ["DIV"] = "1011";
    
-   regex pattern("^([A-Z]+)\\s+([$@=]?)(\\d)+$");   
+   regex pattern("^([A-Z]+)\\s+([$@=]?)(\\d+)+$");   
    regex pattern_without_operand("^([A-Z]+)$");
    
    smatch matches;
@@ -580,7 +580,7 @@ using namespace std;
   load_program_from_file(filename[1], memory);
   main_loop(memory);
   
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < 15; i++){
      if(!memory[i].empty()){
         cout<<memory[i]<<endl;
      }
