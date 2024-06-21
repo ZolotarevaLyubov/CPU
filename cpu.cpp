@@ -224,6 +224,24 @@ using namespace std;
     
    return increment(res);
  }
+ числа фибоначчи
+ 1,1,2,3,5,8
+ 1,2,3,4,5,6
+ fib(6)=8
+ 
+ void complement_sub(string minuend, string subtrahend){
+   
+   string res = addition(minuend, complement_code(subtrahend));
+   cout<<"res: "<<res<<endl;
+   if(res.at(0) == '1'){
+     res = binary_to_decimal(complement_code(res));
+     cout<<"complement_code: "<<complement_code(res)<<endl;
+     cout<<"complement_sub: "<<"-"<<res<<endl; 
+   }
+   else
+     cout<<"complement_sub: "<<binary_to_decimal(res)<<endl;
+     
+ }
  
  string address_field(string a){
    return a.substr(6, 10);   
@@ -475,6 +493,8 @@ using namespace std;
     mar = address_field(mbr);
   }
   
+    program_counter = increment(program_counter);
+  
   if(code == "0000"){
     //HALT
     i++;
@@ -544,7 +564,7 @@ using namespace std;
   else{
    throw logic_error("error: exception");
   }
-  program_counter = increment(program_counter);
+
   cout<<"IR: "<<highlight_ir(instruction_register)<<" ";
   binary_to_mnemonic(instruction_register);
   
@@ -575,7 +595,7 @@ using namespace std;
   
   //process_file(filename[1]);
   
-  
+  /*
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
@@ -585,7 +605,9 @@ using namespace std;
         cout<<memory[i]<<endl;
      }
   }
+  */
   
+  complement_sub(decimal_to_binary(425),decimal_to_binary(491));
   
   //тест
   /*
