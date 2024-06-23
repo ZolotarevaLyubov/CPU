@@ -224,10 +224,13 @@ using namespace std;
     
    return increment(res);
  }
+ 
+ /*
  числа фибоначчи
  1,1,2,3,5,8
  1,2,3,4,5,6
  fib(6)=8
+ */
  
  void complement_sub(string minuend, string subtrahend){
    
@@ -607,7 +610,7 @@ using namespace std;
   }
   */
   
-  complement_sub(decimal_to_binary(425),decimal_to_binary(491));
+  complement_sub(decimal_to_binary(22),decimal_to_binary(23));
   
   //тест
   /*
