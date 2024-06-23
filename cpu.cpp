@@ -237,9 +237,12 @@ using namespace std;
    string res = addition(minuend, complement_code(subtrahend));
    cout<<"res: "<<res<<endl;
    if(res.at(0) == '1'){
-     res = binary_to_decimal(complement_code(res));
+     //res = binary_to_decimal(complement_code(res));
+     
      cout<<"complement_code: "<<complement_code(res)<<endl;
-     cout<<"complement_sub: "<<"-"<<res<<endl; 
+     res = complement_code(res);
+     //res = binary_to_decimal(res);
+     cout<<"complement_sub: "<<"-"<<binary_to_decimal(res)<<endl; 
    }
    else
      cout<<"complement_sub: "<<binary_to_decimal(res)<<endl;
@@ -610,7 +613,7 @@ using namespace std;
   }
   */
   
-  complement_sub(decimal_to_binary(22),decimal_to_binary(23));
+  complement_sub(decimal_to_binary(425),decimal_to_binary(491));
   
   //тест
   /*
