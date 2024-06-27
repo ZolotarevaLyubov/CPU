@@ -238,8 +238,7 @@ using namespace std;
    cout<<"res: "<<res<<endl;
    if(res.at(0) == '1'){
      cout<<"complement_code: "<<complement_code(res)<<endl;
-     res = complement_code(res);
-     
+     res = complement_code(res);     
      cout<<"complement_sub: "<<"-"<<binary_to_decimal(res)<<endl; 
    }
    else
