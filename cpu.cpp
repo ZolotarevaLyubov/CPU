@@ -598,7 +598,7 @@ using namespace std;
   
   //process_file(filename[1]);
   
-  /*
+  
   vector<string>memory(1024, "0000000000000000");
   load_program_from_file(filename[1], memory);
   main_loop(memory);
@@ -608,9 +608,9 @@ using namespace std;
         cout<<memory[i]<<endl;
      }
   }
-  */
   
-  complement_sub(decimal_to_binary(425),decimal_to_binary(491));
+  
+  //complement_sub(decimal_to_binary(425),decimal_to_binary(491));
   
   //тест
   /*
