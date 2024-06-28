@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <bitset>
 #include <fstream>
+#include <format>
 using namespace std;
 
 
@@ -198,7 +199,7 @@ using namespace std;
    return binary;
  }
  
-  int binary_to_decimal(string binary){
+  int binary_to_decimal_base(string binary){
     int decimal = 0;
     int power = 1;
     
@@ -210,7 +211,15 @@ using namespace std;
     }
     return decimal;
   }
- 
+  
+  int binary_to_decimal(string binary){
+    int res = binary_to_decimal_base(binary);
+    if(binary.at(0) == '1'){
+      res = -res;  
+    }
+    return res;  
+  }
+   
  string complement_code(string a){
    string res = a;
    
@@ -333,6 +342,7 @@ using namespace std;
      //string binary_word;
      
         string binary_command = command_map[command];
+        
      //string binary_command = bitset<4>(command[0]).to_string();
      //string binary_symbol = (symbol == "$") ? "10" : "01";
         string address_mode_binary;
@@ -365,7 +375,8 @@ using namespace std;
            } 
    }
    
-          return "Error: R_C";
+          cout<<"error: regex_converting"<<endl;
+          file.close();
    
  }
  
@@ -401,7 +412,10 @@ using namespace std;
        
      string line;//текущая строка
      int address = 0;  //текущий адрес в памяти
-     regex find_data("^(DATA\\s)");
+     regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
+     
+     // DATA 42,13  bla-BLA
+     
      
      while(getline(file,line)){
      //DATA
@@ -530,11 +544,14 @@ using namespace std;
   }
   else if(code == "0110"){
     //BRGE
-    if(stoi(accumulator, NULL, 2) >= 0)
-     program_counter = mar;
+    if(accumulator.at(0) == '0'){
+      program_counter = mar;
+    }
   }
   else if(code == "0111"){
     //BRLT
+    if(accumulator.at(0) == '1')
+      program_counter = mar;
   }
   else if(code == "1000"){//берет поле адреса, идет в память и получает значение по этому адресу,
   //складывает с аккумулятором и записывает в аккумулятор
@@ -550,8 +567,9 @@ using namespace std;
     if(code_address_mode_field != "01"){
       mbr = read_from_memory(memory, mar);//
     }
-    accumulator = subtraction(accumulator, mbr);
+    //accumulator = subtraction(accumulator, mbr);
     
+    accumulator = addition(accumulator, complement_code(mbr));
   }
   else if(code == "1010"){
     //MUL
@@ -565,7 +583,7 @@ using namespace std;
     //DIV
   }
   else{
-   throw logic_error("error: exception");
+   throw logic_error(format("{0}error: exception",__LINE__));
   }
 
   cout<<"IR: "<<highlight_ir(instruction_register)<<" ";

@@ -1,7 +1,4 @@
-LOAD 6
-SUB 7
-BREQ 5
-STORE 6
-BR 0
+fjkld 4
+SUB 3
 HALT
-DATA 5, 1, 1
+DATA 5, 1, 
