@@ -374,9 +374,9 @@ using namespace std;
              return "0000000000000000";
            } 
    }
-   
-          cout<<"error: regex_converting"<<endl;
-          file.close();
+    return "error: regex_converting";
+    //cout<<"error: regex_converting"<<endl;
+    //file.close();
    
  }
  
@@ -583,8 +583,11 @@ using namespace std;
     //DIV
   }
   else{
+  /*
    string a = format("{0}error: exception", __LINE__);
    throw logic_error(a);
+  */
+  throw logic_error("error: exception at line " + to_string(__LINE__));
   }
 
   cout<<"IR: "<<highlight_ir(instruction_register)<<" ";
