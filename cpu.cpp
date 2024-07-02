@@ -583,11 +583,7 @@ using namespace std;
     //DIV
   }
   else{
-  /*
-   string a = format("{0}error: exception", __LINE__);
-   throw logic_error(a);
-  */
-  throw logic_error("error: exception at line " + to_string(__LINE__));
+    throw logic_error("error: exception at line " + to_string(__LINE__));
   }
 
   cout<<"IR: "<<highlight_ir(instruction_register)<<" ";
