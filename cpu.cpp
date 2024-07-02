@@ -374,7 +374,7 @@ using namespace std;
              return "0000000000000000";
            } 
    }
-    return "error: regex_converting";
+    return "error: regex_converting" + to_string(__LINE__);
     //cout<<"error: regex_converting"<<endl;
     //file.close();
    

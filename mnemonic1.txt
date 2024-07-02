@@ -1,4 +1,4 @@
 LOAD 4
 SUB 3
 HALT
-DATA 5, 1, 
+DATA 5, 4, 
