@@ -51,13 +51,22 @@ using namespace std;
   }
  }
  
+ //добавить проверку на отриц результат
+ string complement_code(string a);
+ int binary_to_decimal(string binary);
+ 
  string subtraction(string a, string b){
   if(a.size() != b.size())
     throw invalid_argument("error: different size_S");
   else{
     string res(a.size(), '|');
     int borrow = 0;
-    
+     cout<<"a = "<<a<<endl;
+     cout<<"complement_code b =  "<<complement_code(b)<<endl;
+  if(binary_to_decimal(a) < binary_to_decimal(b)){
+     res = addition(a, complement_code(b));
+    }
+  else{        
     for(int i = a.size() - 1; i >= 0; i--){
        int difference = (a.at(i) - '0') - (b.at(i) - '0') - borrow;
        if(difference < 0){
@@ -69,6 +78,8 @@ using namespace std;
        }     
        res.at(i) = '0' + difference;
     }
+  }
+    
     return res;
   }     
   
