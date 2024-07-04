@@ -51,7 +51,6 @@ using namespace std;
   }
  }
  
- //добавить проверку на отриц результат
  string complement_code(string a);
  int binary_to_decimal(string binary);
  
@@ -63,10 +62,9 @@ using namespace std;
     int borrow = 0;
      cout<<"a = "<<a<<endl;
      cout<<"complement_code b =  "<<complement_code(b)<<endl;
-  if(binary_to_decimal(a) < binary_to_decimal(b)){
-     res = addition(a, complement_code(b));
-    }
-  else{        
+ 
+     //res = addition(a, complement_code(b));
+    /*       
     for(int i = a.size() - 1; i >= 0; i--){
        int difference = (a.at(i) - '0') - (b.at(i) - '0') - borrow;
        if(difference < 0){
@@ -78,8 +76,8 @@ using namespace std;
        }     
        res.at(i) = '0' + difference;
     }
-  }
-    
+  */
+      
     return res;
   }     
   
@@ -385,7 +383,7 @@ using namespace std;
              return "0000000000000000";
            } 
    }
-    return "error: regex_converting" + to_string(__LINE__);
+      return "error: regex_converting" + to_string(__LINE__);
     //cout<<"error: regex_converting"<<endl;
     //file.close();
    

@@ -1,4 +1,4 @@
-LOAD 4
-SUB 3
+LOAD 3
+STORE 5 
 HALT
-DATA 5, 4, 
+DATA 5, 4, 0 
