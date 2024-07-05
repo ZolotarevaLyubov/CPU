@@ -59,11 +59,11 @@ using namespace std;
     throw invalid_argument("error: different size_S");
   else{
     string res(a.size(), '|');
-    int borrow = 0;
+    //int borrow = 0;
      cout<<"a = "<<a<<endl;
      cout<<"complement_code b =  "<<complement_code(b)<<endl;
  
-     //res = addition(a, complement_code(b));
+     res = addition(a, complement_code(b));
     /*       
     for(int i = a.size() - 1; i >= 0; i--){
        int difference = (a.at(i) - '0') - (b.at(i) - '0') - borrow;
@@ -222,10 +222,14 @@ using namespace std;
   }
   
   int binary_to_decimal(string binary){
-    int res = binary_to_decimal_base(binary);
+    int res;
     if(binary.at(0) == '1'){
+      binary = complement_code(binary);
+      res = binary_to_decimal_base(binary);
       res = -res;  
     }
+    else
+      res = binary_to_decimal_base(binary);
     return res;  
   }
    
@@ -383,10 +387,8 @@ using namespace std;
              return "0000000000000000";
            } 
    }
-      return "error: regex_converting" + to_string(__LINE__);
-    //cout<<"error: regex_converting"<<endl;
-    //file.close();
-   
+   else 
+      throw logic_error("error: regex_converting " + to_string(__LINE__));   
  }
  
  
@@ -599,7 +601,7 @@ using namespace std;
   binary_to_mnemonic(instruction_register);
   
   cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
-  cout<<"AC: "<<accumulator<<"("<<stoi(accumulator, NULL,2)<<")"<< endl;
+  cout<<"AC: "<<accumulator<<"("<<binary_to_decimal(accumulator)<<")"<< endl;
   }
   cout<<"accumulator: "<<accumulator<<endl;
  }
@@ -637,7 +639,7 @@ using namespace std;
   }
   
   
-  //complement_sub(decimal_to_binary(425),decimal_to_binary(491));
+  //complement_sub(decimal_to_binary(4),decimal_to_binary(5));
   
   //тест
   /*
