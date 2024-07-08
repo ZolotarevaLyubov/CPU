@@ -163,7 +163,13 @@ using namespace std;
         l = shift_left(l, b.size() - 1 - i);
         res = addition(res, l); 
     }
-    return res;
+    if(a.at(0) == '1' || b.at(0) == '1'){
+      res.at(0) = '1';
+    }
+    else if(a.at(0) == '1' && b.at(0) == '1'){
+      res.at(0) = '0';
+    }
+    return res; 
     }
     
  }
