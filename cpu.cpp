@@ -194,7 +194,6 @@ using namespace std;
    return quotient;
  }
  
- 
 // LISP - 20 + - * / if define, lambda, first,rest, cons, null
  
  string decimal_to_binary(int num){
