@@ -143,10 +143,13 @@ using namespace std;
  }
  
  string shift_left(string num, int shift){
-  if(num.at(0) == '0')
-    return num.substr(shift % num.size()) + num.substr(0, shift % num.size());
-  else
-    return num.substr(shift % num.size()) + num.substr(1, shift % num.size());    
+    //return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
+    int actual_shift = shift % num.size();
+    char fill_char = (num.at(0) = '1')? '1' : '0';
+    string shifted = num.substr(actual_shift) + string(actual_shift,fill_char);
+    
+     shifted = shifted.substr(0, num.size());
+    return shifted;
  }
  
 
