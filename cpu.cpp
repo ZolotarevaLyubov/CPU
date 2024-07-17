@@ -349,7 +349,7 @@ using namespace std;
      command_map ["MUL"] = "1010";
      command_map ["DIV"] = "1011";
    
-   regex pattern("^([A-Z]+)\\s+([$@=]?)(\\d+)+$");   
+   regex pattern("^([A-Z]+)\\s+([$@=]?)(\\d+)+(\\s?)+$");   
    regex pattern_without_operand("^([A-Z]+)$");
    
    smatch matches;
