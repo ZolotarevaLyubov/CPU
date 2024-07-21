@@ -432,7 +432,6 @@ using namespace std;
      regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
      
      // DATA 42,13  bla-BLA
-     
      while(getline(file,line)){
      //DATA
        smatch match;
