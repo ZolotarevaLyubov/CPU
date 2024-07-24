@@ -103,7 +103,7 @@ using namespace std;
  }
  
  void load_program_from_file(const char *filename, vector<string> &memory){
-     vector<string> memory;
+     //vector<string> memory;
      ifstream file(filename);
      if(!file.is_open())
        cout<<"error: load_program_from_file"<<endl;
@@ -145,7 +145,15 @@ using namespace std;
  }
  
  int main(int length, char *filename[]){
-   vector<string>memory("0000000000000000");
+   vector<string>memory;
    load_program_from_file(filename[1], memory);
+   
+   ofstream outfile(filename[2]);
+   for (int i = 0; i < memory.size(); i++) {
+       outfile << memory.at(i) << endl;
+   }
+   
+   outfile.close();
+   return 0;
  }
   
