@@ -103,9 +103,9 @@ using namespace std;
   return res;
  }
  
- void load_program_from_file(const char *filename, vector<string> &memory){
+ void load_program_from_file(const char *filename1, const char *filename2, vector<string> &memory) {
      //vector<string> memory;
-     ifstream file(filename);
+     ifstream file(filename1);
      if(!file.is_open())
        cout<<"error: load_program_from_file"<<endl;
        
@@ -137,7 +137,7 @@ using namespace std;
            memory.push_back(machine_code);
        }       
      }
-     ofstream outfile(filename);
+     ofstream outfile(filename2);
      for(int i = 0; i < memory.size(); i++){
         outfile<<memory[i]<<endl;
      }
@@ -147,14 +147,8 @@ using namespace std;
  
  int main(int length, char *filename[]){
    vector<string>memory;
-   load_program_from_file(filename[1], memory);
-   
-   ofstream outfile(filename[2]);
-   for (int i = 0; i < memory.size(); i++) {
-       outfile << memory.at(i) << endl;
-   }
-   
-   outfile.close();
+   load_program_from_file(filename[1], filename[2], memory);
+
    return 0;
  }
   
