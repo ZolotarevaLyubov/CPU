@@ -29,20 +29,20 @@ using namespace std;
                  //-> "000"
 
 
- string addition(string a, string b){
+ string addition(string a, string b) {
   if(a.size() != b.size())
     throw invalid_argument("error: different size_A");
-  else{
+  else {
   string res(a.size(), '|');
   int carry_bit = 0;//перенос единицы
   
-  for(int i = a.size() - 1; i >= 0; i--){
+  for(int i = a.size() - 1; i >= 0; i--) {
    int sum = (a.at(i) - '0') + (b.at(i) - '0') + carry_bit;
    if(sum > 1){
      carry_bit = 1;   
      sum -= 2;  
    }
-   else{
+   else {
      carry_bit = 0;
    }     
    
@@ -55,7 +55,7 @@ using namespace std;
  string complement_code(string a);
  int binary_to_decimal(string binary);
  
- string subtraction(string a, string b){
+ string subtraction(string a, string b) {
   if(a.size() != b.size())
     throw invalid_argument("error: different size_S");
   else{
@@ -84,13 +84,13 @@ using namespace std;
   
  }
  
- string increment(string a){
+ string increment(string a) {
  // string one = "001";
  //  return addition(a, one);
   int n = a.size();
   int i = n-1;
   
-  while(i >= 0 && a.at(i) == '1'){
+  while(i >= 0 && a.at(i) == '1') {
    a.at(i) = '0';
    i--;
   }
@@ -101,18 +101,19 @@ using namespace std;
   
  }
  
- string decrement(string a){
+ string decrement(string a) {
     int n = a.size();
   int i = n-1;
   
-  while(i >= 0 && a.at(i) == '0'){
+  while(i >= 0 && a.at(i) == '0') {
    a.at(i) = '1';
    i--;
   }
-  if(i >= 0){
+  
+  if(i >= 0) {
    a.at(i) = '0';
   }
-  else{
+  else {
    a = '0' + a;
   }
   return a;
@@ -131,9 +132,9 @@ using namespace std;
  
  "0000000000001010"
  */
- string multiply_digit(string num, int multiplier){
+ string multiply_digit(string num, int multiplier) {
    string res(num.size(), '0');
-   for(int i = num.size() - 1; i >= 0; i--){
+   for(int i = num.size() - 1; i >= 0; i--) {
       //res.at(i) = (num.at(i) * multiplier);
       int digit = num.at(i) - '0';
       int product = digit * multiplier;
@@ -143,7 +144,7 @@ using namespace std;
    return res;
  }
  
- string shift_left(string num, int shift){
+ string shift_left(string num, int shift) {
     //return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
     int actual_shift = shift % num.size();
     char fill_char = (num.at(0) = '1')? '1' : '0';
@@ -159,12 +160,13 @@ using namespace std;
 "124"
 "400"
  */
- string multiply(string a, string b){
+ string multiply(string a, string b) {
   if(a.size() != b.size())
     throw invalid_argument("error: different size_M");
-  else{
+  else {
     string res(a.size(), '0');
-    for(int i = b.size() - 1; i >= 0; i--){
+    
+    for(int i = b.size() - 1; i >= 0; i--) {
         int digit = b.at(i) - '0'; 
         string l = multiply_digit(a,digit);
         l = shift_left(l, b.size() - 1 - i);
@@ -176,21 +178,21 @@ using namespace std;
     
  }
  
- string division(string dividend, string divisor){
+ string division(string dividend, string divisor) {
    string quotient(dividend.size(), '0');//частное
    string remainder = dividend;//остаток
    //string remainder = dividend.substr(0, divisor.size() - 1);
    
-   for(int i = 0; i < dividend.size(); i++){
+   for(int i = 0; i < dividend.size(); i++) {
       //remainder += dividend[i];
       remainder = remainder.substr(1) + dividend.at(i);
       
-      if(remainder.size() < divisor.size()){
+      if(remainder.size() < divisor.size()) { 
         int shift_amount = divisor.size() - remainder.size();
         shift_left(remainder, remainder.size() - shift_amount);
       }
       
-      if(remainder >= divisor){
+      if(remainder >= divisor) {
         remainder = subtraction(remainder, divisor);
         quotient.at(i) = '1';
         //quotient[i - (divisor.size() - 1)] = '1';
