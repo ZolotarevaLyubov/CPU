@@ -300,7 +300,7 @@ using namespace std;
    return ir;
  }
  
- string &read_from_memory(vector<string> &memory, string program_counter){//
+ string &read_from_memory(vector<string> &memory, string program_counter){
    int index = stoi(program_counter, NULL, 2);
    
    if(index < 0 || index >= 1024){
@@ -516,7 +516,7 @@ using namespace std;
   
   
   vector<string>memory(1024, "0000000000000000");
-  reading_outfile(memory, filename[2]);
+  reading_outfile(memory, filename[1]);
   
   main_loop(memory);
   

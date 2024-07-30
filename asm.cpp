@@ -109,12 +109,12 @@ using namespace std;
      //vector<string> memory;
      ifstream file(filename1);
      if(!file.is_open())
-       cout<<"error: load_program_from_file"<<endl;
+         cout<<"error: load_program_from_file"<<endl;
        
      string line;//текущая строка
      int address = 0;  //текущий адрес в памяти
      regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
-      
+     
      // DATA 42,13  bla-BLA
      while(getline(file,line)){
      //DATA
@@ -139,16 +139,22 @@ using namespace std;
            memory.push_back(machine_code);
        }       
      }
+     
+     
      ofstream outfile(filename2);
      for(int i = 0; i < memory.size(); i++){
         outfile<<memory[i]<<endl;
      }
      outfile.close();
+     
+     
      file.close();
  }
  
  int main(int length, char *filename[]){
    vector<string>memory;
+   
+   
    load_program_from_file(filename[1], filename[2], memory);
 
    return 0;
