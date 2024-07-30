@@ -9,15 +9,17 @@
 using namespace std;
  
  
- string decimal_to_binary(int num){
+ string decimal_to_binary(int num) {
    string binary(16, '0');
-   int index = 15;
+   int index = 15; 
+   
    while(num > 0 && index >=0){
-     int remainder = num % 2;
-     binary[index] = '0' + remainder;
-     num /= 2;
-     index--;
+       int remainder = num % 2;
+       binary[index] = '0' + remainder;
+       num /= 2;
+       index--;
    }
+   
    return binary;
  }
 
