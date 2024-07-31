@@ -515,7 +515,8 @@ using namespace std;
   //process_file(filename[1]);
   
   
-  vector<string>memory(1024, "0000000000000000");
+  //vector<string>memory(1024, "0000000000000000");
+  vector<string>memory;
   reading_outfile(memory, filename[1]);
   
   main_loop(memory);

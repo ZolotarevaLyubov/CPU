@@ -128,6 +128,7 @@ using namespace std;
             int num = stoi(numbers[i]);
             string machine_code = decimal_to_binary(num);
             //memory[address++] = machine_code;
+            memory.push_back(machine_code);
             
             cout<<"numbers: "<<numbers[i]<<endl;
             cout<<"machine_code: "<<machine_code<<endl;
