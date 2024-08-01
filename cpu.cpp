@@ -326,7 +326,7 @@ using namespace std;
  
  
  //"12,42,67" -> "12","42","67"
- /*
+ 
  void process_file(const char*  filename){
    ifstream file(filename);
    if (!file.is_open()){
@@ -342,7 +342,7 @@ using namespace std;
    }
    file.close();
  }
- */
+ 
  
  void reading_outfile(vector<string> &memory, const char *filename) {
      ifstream file(filename);

@@ -105,6 +105,23 @@ using namespace std;
   return res;
  }
  
+ 
+ void process_file(const char*  filename){
+   ifstream file(filename);
+   if (!file.is_open()){
+      cerr << "unable to open file(error: process_file)"<<endl;
+      return;
+   }
+   string line;
+   while(getline(file, line)){
+      if(line[0] == '*'){
+        continue;
+      }
+      cout<<regex_converting(line)<<endl;
+   }
+   file.close();
+ }
+ 
  void load_program_from_file(const char *filename1, const char *filename2, vector<string> &memory) {
      //vector<string> memory;
      ifstream file(filename1);
