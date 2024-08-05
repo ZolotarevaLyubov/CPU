@@ -1,0 +1,2 @@
+clang++ asm.cpp -o asm
+clang++ cpu.cpp -o cpu

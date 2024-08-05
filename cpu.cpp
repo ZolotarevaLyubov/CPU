@@ -159,6 +159,8 @@ using namespace std;
 /*
 "124"
 "400"
+tutorial hell
+
  */
  string multiply(string a, string b) {
   if(a.size() != b.size())
@@ -327,29 +329,13 @@ using namespace std;
  
  //"12,42,67" -> "12","42","67"
  
- void process_file(const char*  filename){
-   ifstream file(filename);
-   if (!file.is_open()){
-      cerr << "unable to open file(error: process_file)"<<endl;
-      return;
-   }
-   string line;
-   while(getline(file, line)){
-      if(line[0] == '*'){
-        continue;
-      }
-      cout<<regex_converting(line)<<endl;
-   }
-   file.close();
- }
- 
- 
  void reading_outfile(vector<string> &memory, const char *filename) {
      ifstream file(filename);
      string line;
      int address = 0;
      while(getline(file, line)) {
          memory.at(address) = line;
+         address++;
      }
      file.close();              
  }
@@ -515,8 +501,8 @@ using namespace std;
   //process_file(filename[1]);
   
   
-  //vector<string>memory(1024, "0000000000000000");
-  vector<string>memory;
+  vector<string>memory(1024, "0000000000000000");
+ 
   reading_outfile(memory, filename[1]);
   
   main_loop(memory);
