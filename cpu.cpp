@@ -140,7 +140,6 @@ using namespace std;
       int product = digit * multiplier;
       res.at(i) = '0' + (product % 2);
    }
-   
    return res;
  }
  
