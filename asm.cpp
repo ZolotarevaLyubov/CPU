@@ -5,9 +5,13 @@
 #include <bitset>
 #include <fstream>
 #include <format>
+#include <array>
+#include <stdexcept>
 
 using namespace std;
  
+ 
+ const int MEMORY_SIZE = 256;
  
  string decimal_to_binary(int num) {
    string binary(16, '0');
@@ -85,14 +89,16 @@ using namespace std;
    else 
       throw logic_error("error: regex_converting " + to_string(__LINE__));   
  }
- vector<string> split_string(const string &str){
-   
-  vector<string> res;
+ array<string, MEMORY_SIZE> split_string(const string &str, int count){
+  array<string, MEMORY_SIZE> res;
+  //vector<string> res;
   string buffer;
+  count = 0;
   
   for(char c : str){
      if(c == ','){
-       res.push_back(buffer);
+       //res.push_back(buffer);
+       res[count++] = buffer;
        buffer.clear();
      }
      else{
@@ -100,7 +106,8 @@ using namespace std;
      }
   }
   if(!buffer.empty()){
-    res.push_back(buffer);
+    //res.push_back(buffer);
+    res[count++] = buffer;
   }
   return res;
  }
@@ -122,7 +129,7 @@ using namespace std;
    file.close();
  }
  
- void load_program_from_file(const char *filename1, const char *filename2, vector<string> &memory) {
+ void load_program_from_file(const char *filename1, const char *filename2, array<string, MEMORY_SIZE> &memory) {
      //vector<string> memory;
      ifstream file(filename1);
      if(!file.is_open())
@@ -138,14 +145,17 @@ using namespace std;
       
        smatch match;
        if(regex_search(line, match,find_data)){
-         string data_part = line.erase(0,5);
-         vector<string> numbers = split_string(data_part);
+         //string data_part = line.erase(0,5);
+         string data_part = line.substr(5);
+         //vector<string> numbers = split_string(data_part);
+         int count = 0;
+         array<string, MEMORY_SIZE> numbers = split_string(data_part, count);
          
          for(int i = 0; i < numbers.size(); i++){
             int num = stoi(numbers[i]);
             string machine_code = decimal_to_binary(num);
-            //memory[address++] = machine_code;
-            memory.push_back(machine_code);
+            memory[address++] = machine_code;
+            //memory.push_back(machine_code);
             
             cout<<"numbers: "<<numbers[i]<<endl;
             cout<<"machine_code: "<<machine_code<<endl;
@@ -153,14 +163,14 @@ using namespace std;
        }
        else{
            string machine_code = regex_converting(line);
-           //memory[address++] = machine_code;
-           memory.push_back(machine_code);
+           memory[address++] = machine_code;
+           //memory.push_back(machine_code);
        }       
      }
      
      
      ofstream outfile(filename2);
-     for(int i = 0; i < memory.size(); i++){
+     for(int i = 0; i < address; i++){//
         outfile<<memory[i]<<endl;
      }
      outfile.close();
@@ -170,8 +180,8 @@ using namespace std;
  }
  
  int main(int length, char *filename[]){
-   vector<string>memory;
-   
+   //vector<string>memory;
+   array<string, MEMORY_SIZE> memory;
    
    load_program_from_file(filename[1], filename[2], memory);
 
