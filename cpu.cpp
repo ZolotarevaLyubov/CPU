@@ -5,6 +5,8 @@
 #include <bitset>
 #include <fstream>
 #include <format>
+#include <vector>
+#include <stdexept>
 
 using namespace std;
 
