@@ -6,7 +6,8 @@
 #include <fstream>
 #include <format>
 #include <vector>
-#include <stdexept>
+#include <array>
+#include <stdexcept>
 
 using namespace std;
 
@@ -305,7 +306,7 @@ tutorial hell
    return ir;
  }
  
- string &read_from_memory(vector<string> &memory, string program_counter){
+ string &read_from_memory(array<string, MEMORY_SIZE> &memory, string program_counter){
    int index = stoi(program_counter, NULL, 2);
    
    if(index < 0 || index >= 1024){
@@ -332,7 +333,7 @@ tutorial hell
  
  //"12,42,67" -> "12","42","67"
  
- void reading_outfile(array<string, MEMORY_SIZE> memory, const char *filename) {
+ void reading_outfile(array<string, MEMORY_SIZE> &memory, const char *filename) {
      ifstream file(filename);
      string line;
      int address = 0;
@@ -344,7 +345,7 @@ tutorial hell
      file.close();              
  }
 
- void main_loop(vector<string> &memory){
+ void main_loop(array<string, MEMORY_SIZE> &memory){
 //  string arr[1024];
   /*
   for(int i = 0; i <= 1024; i++){
@@ -505,8 +506,8 @@ tutorial hell
   //process_file(filename[1]);
   
   
-  vector<string>memory(1024, "0000000000000000");
- 
+  //vector<string>memory(1024, "0000000000000000");
+  array<string, MEMORY_SIZE> memory;
   reading_outfile(memory, filename[1]);
   
   main_loop(memory);
