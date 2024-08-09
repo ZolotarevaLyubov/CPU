@@ -11,6 +11,7 @@
 using namespace std;
 
 
+ const int MEMORY_SIZE = 256;
 /*
  11 
  101
@@ -331,12 +332,13 @@ tutorial hell
  
  //"12,42,67" -> "12","42","67"
  
- void reading_outfile(vector<string> &memory, const char *filename) {
+ void reading_outfile(array<string, MEMORY_SIZE> memory, const char *filename) {
      ifstream file(filename);
      string line;
      int address = 0;
      while(getline(file, line)) {
-         memory.at(address) = line;
+         //memory.at(address) = line;
+         memory[address] = line;
          address++;
      }
      file.close();              
