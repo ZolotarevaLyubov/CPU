@@ -12,7 +12,7 @@
 using namespace std;
 
 
- const int MEMORY_SIZE = 256;
+ const int MEMORY_SIZE = 1024;
 /*
  11 
  101

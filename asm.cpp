@@ -130,7 +130,7 @@ using namespace std;
  }
  
  void load_program_from_file(const char *filename1, const char *filename2, array<string, MEMORY_SIZE> &memory) {
-     //vector<string> memory;
+     vector<string> instructions;
      ifstream file(filename1);
      if(!file.is_open())
          cout<<"error: load_program_from_file"<<endl;
@@ -138,6 +138,7 @@ using namespace std;
      string line;//текущая строка
      int address = 0;  //текущий адрес в памяти
      regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
+     regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
      
      // DATA 42,13  bla-BLA
      while(getline(file,line)){
@@ -161,9 +162,24 @@ using namespace std;
             cout<<"machine_code: "<<machine_code<<endl;
          }
        }
+       else if(regex_search(line, match, find_org)) {//ORG
+            int instructions_amount = instructions.size();
+            string org_address = match[1];
+            if(instrucnions_amount == 0) {
+                memory.push_back(decimal_to_binary(stoi(org_address)));
+            }
+            else {
+                memory.push_pack(decimal_to_binary(instructions_amount));//количество слов
+            
+                for(int i = 0; i <= instruction_amount; i++) {//инструкции
+                    memory.push_back(instructions);
+                }
+                memory.push_back(decimal_to_binary(stoi(org_address)));
+            }
+       }
        else{
            string machine_code = regex_converting(line);
-           memory[address++] = machine_code;
+           instructions[address++] = machine_code;
            //memory.push_back(machine_code);
        }       
      }
