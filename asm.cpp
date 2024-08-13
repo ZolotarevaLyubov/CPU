@@ -177,7 +177,7 @@ using namespace std;
                 memory.push_back(decimal_to_binary(stoi(org_address)));
             }
        }
-       else{
+       else {
            string machine_code = regex_converting(line);
            instructions[address++] = machine_code;
            //memory.push_back(machine_code);
