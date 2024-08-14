@@ -186,7 +186,7 @@ using namespace std;
      
      
      ofstream outfile(filename2);
-     for(int i = 0; i < address; i++){//
+     for(int i = 0; i < address; i++) {//
         outfile<<memory[i]<<endl;
      }
      outfile.close();
