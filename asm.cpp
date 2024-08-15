@@ -11,7 +11,7 @@
 using namespace std;
  
  
- const int MEMORY_SIZE = 256;
+ //const int MEMORY_SIZE = 256;
  
  string decimal_to_binary(int num) {
    string binary(16, '0');
@@ -89,16 +89,17 @@ using namespace std;
    else 
       throw logic_error("error: regex_converting " + to_string(__LINE__));   
  }
- array<string, MEMORY_SIZE> split_string(const string &str, int count){
-  array<string, MEMORY_SIZE> res;
-  //vector<string> res;
+ 
+ vector<string> split_string(const string &str, int count){
+  //array<string, MEMORY_SIZE> res;
+  vector<string> res;
   string buffer;
   count = 0;
   
   for(char c : str){
      if(c == ','){
-       //res.push_back(buffer);
-       res[count++] = buffer;
+       res.push_back(buffer);
+       //res[count++] = buffer;
        buffer.clear();
      }
      else{
@@ -106,8 +107,8 @@ using namespace std;
      }
   }
   if(!buffer.empty()){
-    //res.push_back(buffer);
-    res[count++] = buffer;
+    res.push_back(buffer);
+    //res[count++] = buffer;
   }
   return res;
  }
@@ -129,7 +130,7 @@ using namespace std;
    file.close();
  }
  
- void load_program_from_file(const char *filename1, const char *filename2, array<string, MEMORY_SIZE> &memory) {
+ void load_program_from_file(const char *filename1, const char *filename2, vector<string> &memory) {
      vector<string> instructions;
      ifstream file(filename1);
      if(!file.is_open())
@@ -138,7 +139,8 @@ using namespace std;
      string line;//текущая строка
      int address = 0;  //текущий адрес в памяти
      regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
-     regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
+     //regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
+     regex find_org("^ORG\\s+\\d+$");
      
      // DATA 42,13  bla-BLA
      while(getline(file,line)){
@@ -148,15 +150,16 @@ using namespace std;
        if(regex_search(line, match,find_data)){
          //string data_part = line.erase(0,5);
          string data_part = line.substr(5);
-         //vector<string> numbers = split_string(data_part);
+        
          int count = 0;
-         array<string, MEMORY_SIZE> numbers = split_string(data_part, count);
+         //array<string, MEMORY_SIZE> numbers = split_string(data_part, count);
+          vector<string> numbers = split_string(data_part, count);
          
          for(int i = 0; i < numbers.size(); i++){
             int num = stoi(numbers[i]);
             string machine_code = decimal_to_binary(num);
-            memory[address++] = machine_code;
-            //memory.push_back(machine_code);
+            //memory[address++] = machine_code;
+            memory.push_back(machine_code);
             
             cout<<"numbers: "<<numbers[i]<<endl;
             cout<<"machine_code: "<<machine_code<<endl;
@@ -165,21 +168,22 @@ using namespace std;
        else if(regex_search(line, match, find_org)) {//ORG
             int instructions_amount = instructions.size();
             string org_address = match[1];
-            if(instrucnions_amount == 0) {
+            if(instructions_amount == 0) {
                 memory.push_back(decimal_to_binary(stoi(org_address)));
             }
             else {
-                memory.push_pack(decimal_to_binary(instructions_amount));//количество слов
+                memory.push_back(decimal_to_binary(instructions_amount));//количество слов
             
-                for(int i = 0; i <= instruction_amount; i++) {//инструкции
-                    memory.push_back(instructions);
+                for(int i = 0; i <= instructions_amount; i++) {//инструкции
+                    memory.push_back(instructions[i]);//
                 }
                 memory.push_back(decimal_to_binary(stoi(org_address)));
             }
        }
        else {
            string machine_code = regex_converting(line);
-           instructions[address++] = machine_code;
+           //instructions[address++] = machine_code;
+           instructions.push_back(machine_code);
            //memory.push_back(machine_code);
        }       
      }
@@ -196,8 +200,8 @@ using namespace std;
  }
  
  int main(int length, char *filename[]){
-   //vector<string>memory;
-   array<string, MEMORY_SIZE> memory;
+   vector<string>memory;
+   //array<string, MEMORY_SIZE> memory;
    
    load_program_from_file(filename[1], filename[2], memory);
 
