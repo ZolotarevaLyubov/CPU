@@ -13,9 +13,9 @@ using namespace std;
  
  //const int MEMORY_SIZE = 256;
  
- string decimal_to_binary(int num) {
-   string binary(16, '0');
-   int index = 15; 
+ string decimal_to_binary(int num, int bit_width) {
+   string binary(bit_width, '0');
+   int index = bit_width - 1; 
    
    while(num > 0 && index >=0){
        int remainder = num % 2;
@@ -66,8 +66,9 @@ using namespace std;
         else if (symbol == "=")
            address_mode_binary = "01";
         else 
-           address_mode_binary = "00";    
-           
+           address_mode_binary = "00";
+               
+        cout << "[regex_converting]" << __LINE__ <<endl;   
         string binary_number = bitset<10>(stoi(num)).to_string();
         
         cout<<"(r_c)command: "<<command<<endl;
@@ -140,12 +141,12 @@ using namespace std;
      int address = 0;  //текущий адрес в памяти
      regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
      //regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
-     regex find_org("^ORG\\s+\\d+$");
-     
+     regex find_org(R"(^ORG\s+(\d+)$)");
+      
      // DATA 42,13  bla-BLA
      while(getline(file,line)){
      //DATA
-      
+       cout << line <<endl;
        smatch match;
        if(regex_search(line, match,find_data)){
          //string data_part = line.erase(0,5);
@@ -156,10 +157,11 @@ using namespace std;
           vector<string> numbers = split_string(data_part, count);
          
          for(int i = 0; i < numbers.size(); i++){
+            cout << "[load_program_from_file]" << __LINE__ <<endl;
             int num = stoi(numbers[i]);
-            string machine_code = decimal_to_binary(num);
+            string machine_code = decimal_to_binary(num, 16);
             //memory[address++] = machine_code;
-            memory.push_back(machine_code);
+            instructions.push_back(machine_code);
             
             cout<<"numbers: "<<numbers[i]<<endl;
             cout<<"machine_code: "<<machine_code<<endl;
@@ -169,17 +171,24 @@ using namespace std;
             int instructions_amount = instructions.size();
             string org_address = match[1];
             if(instructions_amount == 0) {
-                memory.push_back(decimal_to_binary(stoi(org_address)));
+                cout << "[load_program_from_file]" << __LINE__ <<endl;
+                cout << org_address <<endl;
+                memory.push_back(decimal_to_binary(stoi(org_address), 10));
             }
             else {
-                memory.push_back(decimal_to_binary(instructions_amount));//количество слов
+                memory.push_back(decimal_to_binary(instructions_amount, 10));//количество слов
             
                 for(int i = 0; i <= instructions_amount; i++) {//инструкции
                     memory.push_back(instructions[i]);//
+                    
                 }
-                memory.push_back(decimal_to_binary(stoi(org_address)));
+                instructions.clear();
+                    
+                cout << "[load_program_from_file]" << __LINE__ <<endl;
+                memory.push_back(decimal_to_binary(stoi(org_address), 10));
             }
        }
+       
        else {
            string machine_code = regex_converting(line);
            //instructions[address++] = machine_code;
@@ -188,9 +197,17 @@ using namespace std;
        }       
      }
      
+             if(instructions.size() > 0) {
+             memory.push_back(decimal_to_binary(instructions.size(), 10));
+             for(int i = 0; i < instructions.size(); i++) {
+                memory.push_back(instructions[i]);
+            }
+            
+        }    
+
      
      ofstream outfile(filename2);
-     for(int i = 0; i < address; i++) {//
+     for(int i = 0; i < memory.size(); i++) {//
         outfile<<memory[i]<<endl;
      }
      outfile.close();
