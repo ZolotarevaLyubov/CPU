@@ -156,7 +156,7 @@ using namespace std;
          //array<string, MEMORY_SIZE> numbers = split_string(data_part, count);
           vector<string> numbers = split_string(data_part, count);
          
-         for(int i = 0; i < numbers.size(); i++){
+         for(int i = 0; i < numbers.size(); i++) {
             cout << "[load_program_from_file]" << __LINE__ <<endl;
             int num = stoi(numbers[i]);
             string machine_code = decimal_to_binary(num, 16);
