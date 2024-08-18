@@ -216,8 +216,9 @@ using namespace std;
      file.close();
  }
  
- int main(int length, char *filename[]){
+ int main(int length, char *filename[]) {
    vector<string>memory;
+   
    //array<string, MEMORY_SIZE> memory;
    
    load_program_from_file(filename[1], filename[2], memory);
