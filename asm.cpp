@@ -42,7 +42,7 @@ using namespace std;
      command_map ["MUL"] = "1010";
      command_map ["DIV"] = "1011";
    
-   regex pattern("^([A-Z]+)\\s+([$@=]?)(\\d+)+(\\s?)+$");   
+   regex pattern(R"(^([A-Z]+)\s+([$@=]?)(\d+)+(\s?)+$)");   
    regex pattern_without_operand("^([A-Z]+)$");
    
    smatch matches;
@@ -139,7 +139,7 @@ using namespace std;
        
      string line;//текущая строка
      int address = 0;  //текущий адрес в памяти
-     regex find_data("^(DATA\\s+(\\d)+(,\\d)+)+$");
+     regex find_data(R"(^(DATA\s+(\d)+(,\d)+)+$)");
      //regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
      regex find_org(R"(^ORG\s+(\d+)$)");
       
