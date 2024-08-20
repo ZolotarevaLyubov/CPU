@@ -484,12 +484,8 @@ tutorial hell
   cout<<"accumulator: "<<accumulator<<endl;
  }
  
- int main( int length, char *filename[]){
-  //cout<<addition("0011", "0111")<<endl;
-  //cout<<addition("100","100")<<endl;
-  //cout<<increment("1011")<<endl;
-  //cout<<decrement("1100")<<endl;
-  //cout<<multiply("0000000000000101","0000000000000011")<<endl;
+ int main( int length, char *filename[]) {
+  
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
