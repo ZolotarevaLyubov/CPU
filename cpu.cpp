@@ -138,6 +138,7 @@ using namespace std;
  */
  string multiply_digit(string num, int multiplier) {
    string res(num.size(), '0');
+   
    for(int i = num.size() - 1; i >= 0; i--) {
       //res.at(i) = (num.at(i) * multiplier);
       int digit = num.at(i) - '0';
@@ -485,7 +486,7 @@ tutorial hell
  }
  
  int main( int length, char *filename[]) {
-  
+  cout<<multiply("0101", "0010")<<endl;
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
@@ -503,6 +504,8 @@ tutorial hell
   
   
   //vector<string>memory(1024, "0000000000000000");
+  
+  /*
   array<string, MEMORY_SIZE> memory;
   reading_outfile(memory, filename[1]);
   
@@ -513,7 +516,7 @@ tutorial hell
         cout<<memory[i]<<endl;
      }
   }
-  
+  */
   
   //complement_sub(decimal_to_binary(4),decimal_to_binary(5));
   
