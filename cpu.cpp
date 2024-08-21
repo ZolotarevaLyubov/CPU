@@ -149,17 +149,20 @@ using namespace std;
    return res;
  }
  
- string shift_left(string num, int shift) {
-    //return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
-    int actual_shift = shift % num.size();
-    char fill_char = (num.at(0) = '1')? '1' : '0';
-    string shifted = num.substr(actual_shift) + string(actual_shift,fill_char);
+ string shift_left_positive(string num, int shift) {
+    return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
+    //int actual_shift = shift % num.size();
+    //char fill_char = (num.at(0) = '1')? '1' : '0';
+    //cout << "fill_char: " << fill_char <<endl;
+    //string shifted = num.substr(actual_shift) + string(actual_shift,fill_char);
     
-     shifted = shifted.substr(0, num.size());
-    return shifted;
+     //shifted = shifted.substr(0, num.size());
+    //return shifted;
  }
  
-
+ string shift_left_negative(string num, int shift) {
+    return num.substr(shift % num.size()) + num.substr(1, shift % num.size());  
+ }
 
 /*
 "124"
@@ -167,23 +170,72 @@ using namespace std;
 tutorial hell
 
  */
+ 
+ 
+ 
+ 
+ 
+ /*
  string multiply(string a, string b) {
   if(a.size() != b.size())
     throw invalid_argument("error: different size_M");
+    
   else {
-    string res(a.size(), '0');
+    if ((a.at(0) == '0' && b.at(0) == '0') || (a.at(0) == '1' && b.at(0) == '1')) {
+        string res(a.size(), '0');
     
-    for(int i = b.size() - 1; i >= 0; i--) {
-        int digit = b.at(i) - '0'; 
-        string l = multiply_digit(a,digit);
-        l = shift_left(l, b.size() - 1 - i);
-        res = addition(res, l); 
-    }
-
-    return res; 
-    }
+        for(int i = b.size() - 1; i >= 0; i--) {
+            int digit = b.at(i) - '0'; 
+            string l = multiply_digit(a,digit);
+            l = shift_left_positive(l, b.size() - 1 - i);
+            res = addition(res, l); 
+        }
+     return res;
+    } 
     
+        string res(a.size(), '1');
+        
+        for(int i = b.size() - 1; i >= 0; i--) {
+            int digit = b.at(i) - '0'; 
+            string l = multiply_digit(a,digit);
+            l = shift_left_negative(l, b.size() - 1 - i);
+            res = addition(res, l); 
+            }
+         }
+    
+    }
+    return res;
  }
+ */
+ 
+ string multiply(string a, string b) {
+  if(a.size() != b.size())
+    throw invalid_argument("error: different size_M");
+    
+  if ((a.at(0) == '0' && b.at(0) == '0') || (a.at(0) == '1' && b.at(0) == '1')) {
+        string res(a.size(), '0');
+    
+        for(int i = b.size() - 1; i >= 0; i--) {
+            int digit = b.at(i) - '0'; 
+            string l = multiply_digit(a,digit);
+            l = shift_left_positive(l, b.size() - 1 - i);
+            res = addition(res, l); 
+        }
+     return res;
+    } 
+    
+        string res(a.size(), '1');
+        
+        for(int i = b.size() - 1; i >= 0; i--) {
+            int digit = b.at(i) - '0'; 
+            string l = multiply_digit(a,digit);
+            l = shift_left_negative(l, b.size() - 1 - i);
+            res = addition(res, l); 
+            }
+        return res;    
+         }
+    
+
  
  string division(string dividend, string divisor) {
    string quotient(dividend.size(), '0');//частное
@@ -196,7 +248,7 @@ tutorial hell
       
       if(remainder.size() < divisor.size()) { 
         int shift_amount = divisor.size() - remainder.size();
-        shift_left(remainder, remainder.size() - shift_amount);
+        shift_left_positive(remainder, remainder.size() - shift_amount);
       }
       
       if(remainder >= divisor) {
@@ -486,7 +538,7 @@ tutorial hell
  }
  
  int main( int length, char *filename[]) {
-  cout<<multiply("0101", "0010")<<endl;
+  cout<<multiply("00101", "11101")<<endl;//5*2
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
