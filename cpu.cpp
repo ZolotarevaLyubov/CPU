@@ -171,42 +171,25 @@ tutorial hell
 
  */
  
- 
- 
- 
- 
  /*
- string multiply(string a, string b) {
-  if(a.size() != b.size())
-    throw invalid_argument("error: different size_M");
-    
-  else {
-    if ((a.at(0) == '0' && b.at(0) == '0') || (a.at(0) == '1' && b.at(0) == '1')) {
-        string res(a.size(), '0');
-    
-        for(int i = b.size() - 1; i >= 0; i--) {
-            int digit = b.at(i) - '0'; 
-            string l = multiply_digit(a,digit);
-            l = shift_left_positive(l, b.size() - 1 - i);
-            res = addition(res, l); 
-        }
-     return res;
-    } 
-    
-        string res(a.size(), '1');
-        
-        for(int i = b.size() - 1; i >= 0; i--) {
-            int digit = b.at(i) - '0'; 
-            string l = multiply_digit(a,digit);
-            l = shift_left_negative(l, b.size() - 1 - i);
-            res = addition(res, l); 
-            }
-         }
-    
-    }
-    return res;
- }
+string multiply(string a, string b) {
+ if(a.size() != b.size())
+   throw invalid_argument("error: different size_M");
+ else {
+   string res(a.size(), '0');
+   
+   for(int i = b.size() - 1; i >= 0; i--) {
+       int digit = b.at(i) - '0';
+       string l = multiply_digit(a,digit);
+       l = shift_left(l, b.size() - 1 - i);
+       res = addition(res, l);
+   }
+   return res;
+   }
+   
+}
  */
+ 
  
  string multiply(string a, string b) {
   if(a.size() != b.size())
@@ -223,7 +206,7 @@ tutorial hell
         }
      return res;
     } 
-    
+      
         string res(a.size(), '1');
         
         for(int i = b.size() - 1; i >= 0; i--) {
@@ -538,7 +521,7 @@ tutorial hell
  }
  
  int main( int length, char *filename[]) {
-  cout<<multiply("00101", "11101")<<endl;//5*2
+  cout<<multiply("11010", "11101")<<endl;//5*3
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
