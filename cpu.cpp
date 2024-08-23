@@ -374,9 +374,17 @@ string multiply(string a, string b) {
      string line;
      int address = 0;
      while(getline(file, line)) {
+         if(line.empty())
+             cout << "LINE is EMPTY: reading_outfile()" << endl;
          //memory.at(address) = line;
-         memory[address] = line;
-         address++;
+         if(line.length() == 10) {
+             address = stoi(line, NULL, 2);
+         }
+         else if(line.length() == 16) {
+             memory[address] = line;
+             address++;     
+         }
+        
      }
      file.close();              
  }
@@ -521,7 +529,7 @@ string multiply(string a, string b) {
  }
  
  int main( int length, char *filename[]) {
-  cout<<multiply("11010", "11101")<<endl;//5*3
+  //cout<<multiply("11010", "11101")<<endl;//5*3
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
@@ -540,7 +548,7 @@ string multiply(string a, string b) {
   
   //vector<string>memory(1024, "0000000000000000");
   
-  /*
+  
   array<string, MEMORY_SIZE> memory;
   reading_outfile(memory, filename[1]);
   
@@ -551,7 +559,7 @@ string multiply(string a, string b) {
         cout<<memory[i]<<endl;
      }
   }
-  */
+  
   
   //complement_sub(decimal_to_binary(4),decimal_to_binary(5));
   
