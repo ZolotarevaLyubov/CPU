@@ -8,6 +8,7 @@
 #include <vector>
 #include <array>
 #include <stdexcept>
+#include <sstream>
 
 using namespace std;
 
@@ -373,19 +374,32 @@ string multiply(string a, string b) {
      ifstream file(filename);
      string line;
      int address = 0;
-     while(getline(file, line)) {
-         if(line.empty())
-             cout << "LINE is EMPTY: reading_outfile()" << endl;
-         //memory.at(address) = line;
-         if(line.length() == 10) {
-             address = stoi(line, NULL, 2);
-         }
-         else if(line.length() == 16) {
-             memory[address] = line;
-             address++;     
-         }
-        
+     
+     if(!file) {
+         cout << "error: reading_outfile " << __LINE__ <<endl;     
      }
+     
+     stringstream buffer;
+     buffer << file.rdbuf();
+     string commands = buffer.str();
+     cout << commands <<endl;
+     
+     int origin = stoi(commands.substr(0,10), NULL, 2);
+     int words_amount = stoi(commands.substr(10,10), NULL, 2);
+     int bit_position = 20;
+     address = origin;
+      
+     for(int i = 0; i <= words_amount; i++) {
+     
+        string command = commands.substr(bit_position, 16);
+        memory[address] = command;
+        address++;
+        bit_position += 16;     
+     }
+     
+     cout << "ORIGIN: " << origin <<endl;
+     cout << "WORDS AMOUNT: " << words_amount <<endl;
+     
      file.close();              
  }
 
@@ -551,7 +565,7 @@ string multiply(string a, string b) {
   
   array<string, MEMORY_SIZE> memory;
   reading_outfile(memory, filename[1]);
-  
+  /*
   main_loop(memory);
   
   for(int i = 0; i < 15; i++){
@@ -559,7 +573,7 @@ string multiply(string a, string b) {
         cout<<memory[i]<<endl;
      }
   }
-  
+  */
   
   //complement_sub(decimal_to_binary(4),decimal_to_binary(5));
   

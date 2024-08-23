@@ -1,2 +1,2 @@
-clang++ asm.cpp -o asm
-clang++ cpu.cpp -o cpu
+clang++ asm.cpp -o asm -std=gnu++20 
+clang++ cpu.cpp -o cpu -std=gnu++20 
