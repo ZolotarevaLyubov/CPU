@@ -207,6 +207,7 @@ using namespace std;
 
      
      ofstream outfile(filename2);
+     
      for(int i = 0; i < memory.size(); i++) {//
         outfile<<memory[i];
      }
