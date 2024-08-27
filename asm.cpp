@@ -211,6 +211,7 @@ using namespace std;
      for(int i = 0; i < memory.size(); i++) {//
         outfile<<memory[i];
      }
+     
      outfile.close();
      
      
