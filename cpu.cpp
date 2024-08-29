@@ -172,7 +172,7 @@ tutorial hell
 
  */
  
- /*
+ 
 string multiply(string a, string b) {
  if(a.size() != b.size())
    throw invalid_argument("error: different size_M");
@@ -189,9 +189,9 @@ string multiply(string a, string b) {
    }
    
 }
- */
  
  
+ /*
  string multiply(string a, string b) {
   if(a.size() != b.size())
     throw invalid_argument("error: different size_M");
@@ -219,7 +219,7 @@ string multiply(string a, string b) {
         return res;    
          }
     
-
+*/
  
  string division(string dividend, string divisor) {
    string quotient(dividend.size(), '0');//частное
@@ -543,7 +543,7 @@ string multiply(string a, string b) {
  }
  
  int main( int length, char *filename[]) {
-  //cout<<multiply("11010", "11101")<<endl;//5*3
+  cout<<multiply("00101", "00010")<<endl;//5*3
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
@@ -563,8 +563,8 @@ string multiply(string a, string b) {
   //vector<string>memory(1024, "0000000000000000");
   
   
-  array<string, MEMORY_SIZE> memory;
-  reading_outfile(memory, filename[1]);
+  //array<string, MEMORY_SIZE> memory;
+  //reading_outfile(memory, filename[1]);
   /*
   main_loop(memory);
   
