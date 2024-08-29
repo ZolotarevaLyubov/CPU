@@ -172,7 +172,7 @@ tutorial hell
 
  */
  
- 
+ /*
 string multiply(string a, string b) {
  if(a.size() != b.size())
    throw invalid_argument("error: different size_M");
@@ -182,44 +182,40 @@ string multiply(string a, string b) {
    for(int i = b.size() - 1; i >= 0; i--) {
        int digit = b.at(i) - '0';
        string l = multiply_digit(a,digit);
-       l = shift_left(l, b.size() - 1 - i);
+       l = shift_left_positive(l, b.size() - 1 - i);
        res = addition(res, l);
    }
    return res;
    }
    
 }
+ */
  
- 
- /*
- string multiply(string a, string b) {
-  if(a.size() != b.size())
-    throw invalid_argument("error: different size_M");
-    
-  if ((a.at(0) == '0' && b.at(0) == '0') || (a.at(0) == '1' && b.at(0) == '1')) {
-        string res(a.size(), '0');
-    
-        for(int i = b.size() - 1; i >= 0; i--) {
-            int digit = b.at(i) - '0'; 
-            string l = multiply_digit(a,digit);
-            l = shift_left_positive(l, b.size() - 1 - i);
-            res = addition(res, l); 
-        }
-     return res;
-    } 
-      
-        string res(a.size(), '1');
-        
-        for(int i = b.size() - 1; i >= 0; i--) {
-            int digit = b.at(i) - '0'; 
-            string l = multiply_digit(a,digit);
-            l = shift_left_negative(l, b.size() - 1 - i);
-            res = addition(res, l); 
-            }
-        return res;    
-         }
-    
-*/
+string multiply(string a, string b) {//ошибка в комплемент код(инкремент в результате)
+ if(a.size() != b.size())
+   throw invalid_argument("error: different size_M");
+ else {
+   string res(a.size(), '0');
+   
+   if(a.at(0) == '1'){
+       a = complement_code(a);
+   }
+   
+   for(int i = b.size() - 1; i >= 0; i--) {
+       int digit = b.at(i) - '0';
+       string l = multiply_digit(a,digit);
+       l = shift_left_positive(l, b.size() - 1 - i);
+       res = addition(res, l);
+   }
+   /*
+   if(a.at(0) == '1'){
+       res = complement_code(res);
+   }
+   */
+   return res;
+   }
+   
+}
  
  string division(string dividend, string divisor) {
    string quotient(dividend.size(), '0');//частное
@@ -543,7 +539,10 @@ string multiply(string a, string b) {
  }
  
  int main( int length, char *filename[]) {
-  cout<<multiply("00101", "00010")<<endl;//5*3
+  //cout<<binary_to_decimal(multiply("11010", "00010"))<<endl;//5*2
+  
+  cout<<complement_code("11010")<<endl;
+  
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
