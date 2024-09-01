@@ -150,8 +150,9 @@ using namespace std;
    return res;
  }
  
- string shift_left_positive(string num, int shift) {
-    return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
+ string shift_left(string num, int shift) {
+     if(num.at(0) == '0')
+         return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
     //int actual_shift = shift % num.size();
     //char fill_char = (num.at(0) = '1')? '1' : '0';
     //cout << "fill_char: " << fill_char <<endl;
@@ -159,12 +160,10 @@ using namespace std;
     
      //shifted = shifted.substr(0, num.size());
     //return shifted;
+     return num.substr(shift % num.size()) + num.substr(1, shift % num.size());  
  }
  
- string shift_left_negative(string num, int shift) {
-    return num.substr(shift % num.size()) + num.substr(1, shift % num.size());  
- }
-
+ 
 /*
 "124"
 "400"
@@ -182,7 +181,7 @@ string multiply(string a, string b) {
    for(int i = b.size() - 1; i >= 0; i--) {
        int digit = b.at(i) - '0';
        string l = multiply_digit(a,digit);
-       l = shift_left_positive(l, b.size() - 1 - i);
+       l = shift_left(l, b.size() - 1 - i);
        res = addition(res, l);
    }
    return res;
@@ -191,20 +190,20 @@ string multiply(string a, string b) {
 }
  */
  
-string multiply(string a, string b) {//ошибка в комплемент код(инкремент в результате)
+string multiply(string a, string b) {
  if(a.size() != b.size())
    throw invalid_argument("error: different size_M");
  else {
    string res(a.size(), '0');
-   
+   /*
    if(a.at(0) == '1'){
        a = complement_code(a);
    }
-   
+   */
    for(int i = b.size() - 1; i >= 0; i--) {
        int digit = b.at(i) - '0';
        string l = multiply_digit(a,digit);
-       l = shift_left_positive(l, b.size() - 1 - i);
+       l = shift_left(l, b.size() - 1 - i);
        res = addition(res, l);
    }
    /*
@@ -212,6 +211,8 @@ string multiply(string a, string b) {//ошибка в комплемент ко
        res = complement_code(res);
    }
    */
+   cout << "Multiply result: " << res <<endl;
+   
    return res;
    }
    
@@ -228,7 +229,7 @@ string multiply(string a, string b) {//ошибка в комплемент ко
       
       if(remainder.size() < divisor.size()) { 
         int shift_amount = divisor.size() - remainder.size();
-        shift_left_positive(remainder, remainder.size() - shift_amount);
+        shift_left(remainder, remainder.size() - shift_amount);
       }
       
       if(remainder >= divisor) {
@@ -279,8 +280,8 @@ string multiply(string a, string b) {//ошибка в комплемент ко
       else
         res.at(i) = '0';
    }
-    
-   return increment(res);
+    return res;
+   //return increment(res);
  }
  
  /*
@@ -539,9 +540,9 @@ string multiply(string a, string b) {//ошибка в комплемент ко
  }
  
  int main( int length, char *filename[]) {
-  //cout<<binary_to_decimal(multiply("11010", "00010"))<<endl;//5*2
-  
-  cout<<complement_code("11010")<<endl;
+  cout << binary_to_decimal(multiply("1111010", "0000011")) << endl;//-5*3
+  cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
+  //cout<<complement_code("11010")<<endl;
   
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
