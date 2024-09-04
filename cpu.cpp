@@ -195,22 +195,14 @@ string multiply(string a, string b) {
    throw invalid_argument("error: different size_M");
  else {
    string res(a.size(), '0');
-   /*
-   if(a.at(0) == '1'){
-       a = complement_code(a);
-   }
-   */
+ 
    for(int i = b.size() - 1; i >= 0; i--) {
        int digit = b.at(i) - '0';
        string l = multiply_digit(a,digit);
        l = shift_left(l, b.size() - 1 - i);
        res = addition(res, l);
    }
-   /*
-   if(a.at(0) == '1'){
-       res = complement_code(res);
-   }
-   */
+  
    cout << "Multiply result: " << res <<endl;
    
    return res;
@@ -269,6 +261,20 @@ string multiply(string a, string b) {
       res = binary_to_decimal_base(binary);
     return res;  
   }
+  
+   string decimal_to_binary(int num, int bit_width) {
+   string binary(bit_width, '0');
+   int index = bit_width - 1; 
+   
+   while(num > 0 && index >=0){
+       int remainder = num % 2;
+       binary[index] = '0' + remainder;
+       num /= 2;
+       index--;
+   }
+   
+   return binary;
+ }
    
  string complement_code(string a){
    string res = a;
@@ -280,8 +286,8 @@ string multiply(string a, string b) {
       else
         res.at(i) = '0';
    }
-    return res;
-   //return increment(res);
+    //return res;
+   return increment(res);
  }
  
  /*
@@ -540,9 +546,11 @@ string multiply(string a, string b) {
  }
  
  int main( int length, char *filename[]) {
-  cout << binary_to_decimal(multiply("1111010", "0000011")) << endl;//-5*3
-  cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
-  //cout<<complement_code("11010")<<endl;
+  //cout << binary_to_decimal(multiply("11010", "00011")) << endl;//-5*3
+  //cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
+  //cout<<binary_to_decimal(complement_code(complement_code(decimal_to_binary(55, 16))))<<endl;
+  
+  cout << binary_to_decimal(multiply(decimal_to_binary(5, 16), decimal_to_binary(2, 16))) << endl;
   
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
@@ -595,3 +603,4 @@ string multiply(string a, string b) {
   
   return 0;
  }
+
