@@ -152,7 +152,7 @@ using namespace std;
  
  string shift_left(string num, int shift) {
      if(num.at(0) == '0')
-         return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
+        return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
     //int actual_shift = shift % num.size();
     //char fill_char = (num.at(0) = '1')? '1' : '0';
     //cout << "fill_char: " << fill_char <<endl;
@@ -194,8 +194,9 @@ string multiply(string a, string b) {
  if(a.size() != b.size())
    throw invalid_argument("error: different size_M");
  else {
+  
    string res(a.size(), '0');
- 
+   
    for(int i = b.size() - 1; i >= 0; i--) {
        int digit = b.at(i) - '0';
        string l = multiply_digit(a,digit);
@@ -550,8 +551,8 @@ string multiply(string a, string b) {
   //cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
   //cout<<binary_to_decimal(complement_code(complement_code(decimal_to_binary(55, 16))))<<endl;
   
-  cout << binary_to_decimal(multiply(decimal_to_binary(5, 16), decimal_to_binary(2, 16))) << endl;
-  
+  cout << binary_to_decimal(multiply(decimal_to_binary(-10, 16), decimal_to_binary(10, 16))) << endl;
+  cout << decimal_to_binary(-5, 16) << endl;
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
