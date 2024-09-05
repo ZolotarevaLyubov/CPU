@@ -9,6 +9,7 @@
 #include <array>
 #include <stdexcept>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
@@ -264,17 +265,27 @@ string multiply(string a, string b) {
   }
   
    string decimal_to_binary(int num, int bit_width) {
-   string binary(bit_width, '0');
-   int index = bit_width - 1; 
+           int a = num;
+           num = abs(num);
+           string binary(bit_width, '0');
+           int index = bit_width - 1; 
    
-   while(num > 0 && index >=0){
-       int remainder = num % 2;
-       binary[index] = '0' + remainder;
-       num /= 2;
-       index--;
-   }
+           while(num > 0 && index >=0){
+               int remainder = num % 2;
+               binary[index] = '0' + remainder;
+               num /= 2;
+               index--;
+       }
+           cout << "NUM:  " << a <<endl;
+           cout << "RESULT:  " << binary << endl;
+           if(a < 0){
+                cout << "RESULT:  " << binary << " = " << binary_to_decimal(binary) << endl;
+                return complement_code(binary);
+           }
+           
+           return binary;
    
-   return binary;
+      
  }
    
  string complement_code(string a){
@@ -551,8 +562,8 @@ string multiply(string a, string b) {
   //cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
   //cout<<binary_to_decimal(complement_code(complement_code(decimal_to_binary(55, 16))))<<endl;
   
-  cout << binary_to_decimal(multiply(decimal_to_binary(-10, 16), decimal_to_binary(10, 16))) << endl;
-  cout << decimal_to_binary(-5, 16) << endl;
+  cout << binary_to_decimal(multiply(decimal_to_binary(-10, 16), decimal_to_binary(8, 16))) << endl;
+  //cout << decimal_to_binary(-5, 16) << endl;
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
   /*
