@@ -152,8 +152,8 @@ using namespace std;
  }
  
  string shift_left(string num, int shift) {
-     if(num.at(0) == '0')
-        return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
+     //if(num.at(0) == '0')
+        //return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
     //int actual_shift = shift % num.size();
     //char fill_char = (num.at(0) = '1')? '1' : '0';
     //cout << "fill_char: " << fill_char <<endl;
@@ -161,7 +161,7 @@ using namespace std;
     
      //shifted = shifted.substr(0, num.size());
     //return shifted;
-     return num.substr(shift % num.size()) + num.substr(1, shift % num.size());  
+     return num.substr(shift % num.size()) + num.substr(0, shift % num.size());  
  }
  
  
@@ -191,6 +191,13 @@ string multiply(string a, string b) {
 }
  */
  
+ string absolute_value(string a) {
+      if(a.at(0) == '1'){
+          return complement_code(a);
+      }
+      return a;
+ }
+ 
 string multiply(string a, string b) {
  if(a.size() != b.size())
    throw invalid_argument("error: different size_M");
@@ -211,6 +218,18 @@ string multiply(string a, string b) {
    }
    
 }
+ 
+ string multiply_signed(string a, string b) {
+     string res = multiply(absolute_value(a), absolute_value(b));
+     
+     if(a.at(0) == '1' && b.at(0) == '1') {
+         return res;
+     }
+     else if(a.at(0) == '1' || b.at(0) == '1') {
+         return complement_code(res);
+     }
+     return res;
+ }
  
  string division(string dividend, string divisor) {
    string quotient(dividend.size(), '0');//частное
@@ -265,8 +284,7 @@ string multiply(string a, string b) {
   }
   
    string decimal_to_binary(int num, int bit_width) {
-           int a = num;
-           num = abs(num);
+          
            string binary(bit_width, '0');
            int index = bit_width - 1; 
    
@@ -276,17 +294,24 @@ string multiply(string a, string b) {
                num /= 2;
                index--;
        }
-           cout << "NUM:  " << a <<endl;
-           cout << "RESULT:  " << binary << endl;
-           if(a < 0){
-                cout << "RESULT:  " << binary << " = " << binary_to_decimal(binary) << endl;
-                return complement_code(binary);
-           }
+           
            
            return binary;
    
       
  }
+   
+   string decimal_to_binary_signed(int num, int bit_width) {
+       int a = num;
+       num = abs(num);
+       
+       if(a < 0) {
+           //cout << "RESULT:  " << binary << " = " << complement_code(binary_to_decimal(binary)) << endl;
+           return complement_code(decimal_to_binary(num, bit_width));
+       }
+       //cout << "RESULT:  " << binary << " = " << binary_to_decimal(binary) << endl;
+       return decimal_to_binary(num, bit_width);
+   }
    
  string complement_code(string a){
    string res = a;
@@ -562,7 +587,15 @@ string multiply(string a, string b) {
   //cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
   //cout<<binary_to_decimal(complement_code(complement_code(decimal_to_binary(55, 16))))<<endl;
   
-  cout << binary_to_decimal(multiply(decimal_to_binary(-10, 16), decimal_to_binary(8, 16))) << endl;
+  cout << binary_to_decimal(multiply_signed(decimal_to_binary_signed(10, 16), decimal_to_binary_signed(-8, 16))) << endl;
+  
+  //cout << "Binary num: " << decimal_to_binary_signed(-13, 16) << endl;
+  //cout << "Decimal: " << binary_to_decimal(decimal_to_binary_signed(-13, 16)) <<endl;
+  
+ 
+  
+  //cout << binary_to_decimal(shift_left(decimal_to_binary_signed(8, 16), 1)) <<endl;
+  
   //cout << decimal_to_binary(-5, 16) << endl;
   //cout<<division("1001", "0011")<<endl;
   //cout<<factorial("0001000")<<endl;
