@@ -221,7 +221,6 @@ using namespace std;
  int main(int length, char *filename[]) {
    vector<string>memory;
    
-   
    load_program_from_file(filename[1], filename[2], memory);
 
    return 0;
