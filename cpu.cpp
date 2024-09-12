@@ -258,7 +258,7 @@ string multiply(string a, string b) {
  
 // LISP - 20 + - * / if define, lambda, first,rest, cons, null
  
-  int binary_to_decimal_base(string binary){
+  int binary_to_decimal(string binary){
     int decimal = 0;
     int power = 1;
     
@@ -271,15 +271,15 @@ string multiply(string a, string b) {
     return decimal;
   }
   
-  int binary_to_decimal(string binary){
+  int binary_to_decimal_signed(string binary){
     int res;
     if(binary.at(0) == '1'){
       binary = complement_code(binary);
-      res = binary_to_decimal_base(binary);
+      res = binary_to_decimal(binary);
       res = -res;  
     }
     else
-      res = binary_to_decimal_base(binary);
+      res = binary_to_decimal(binary);
     return res;  
   }
   
@@ -587,7 +587,7 @@ string multiply(string a, string b) {
   //cout << "Decimal res: " << binary_to_decimal("110000") <<endl;
   //cout<<binary_to_decimal(complement_code(complement_code(decimal_to_binary(55, 16))))<<endl;
   
-  cout << binary_to_decimal(multiply_signed(decimal_to_binary_signed(10, 16), decimal_to_binary_signed(-8, 16))) << endl;
+  //cout << binary_to_decimal_signed(multiply_signed(decimal_to_binary_signed(10, 16), decimal_to_binary_signed(-8, 16))) << endl;
   
   //cout << "Binary num: " << decimal_to_binary_signed(-13, 16) << endl;
   //cout << "Decimal: " << binary_to_decimal(decimal_to_binary_signed(-13, 16)) <<endl;
@@ -616,9 +616,9 @@ string multiply(string a, string b) {
   //vector<string>memory(1024, "0000000000000000");
   
   
-  //array<string, MEMORY_SIZE> memory;
-  //reading_outfile(memory, filename[1]);
-  /*
+  array<string, MEMORY_SIZE> memory;
+  reading_outfile(memory, filename[1]);
+  
   main_loop(memory);
   
   for(int i = 0; i < 15; i++){
@@ -626,7 +626,7 @@ string multiply(string a, string b) {
         cout<<memory[i]<<endl;
      }
   }
-  */
+  
   
   //complement_sub(decimal_to_binary(4),decimal_to_binary(5));
   
