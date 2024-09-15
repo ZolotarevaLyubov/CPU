@@ -621,7 +621,7 @@ string multiply(string a, string b) {
   
   main_loop(memory);
   
-  for(int i = 0; i < 15; i++){
+  for(int i = 0; i < MEMORY_SIZE; i++){
      if(!memory[i].empty()){
         cout<<memory[i]<<endl;
      }
