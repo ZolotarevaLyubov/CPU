@@ -627,25 +627,6 @@ string multiply(string a, string b) {
      }
   }
   
-  
-  //complement_sub(decimal_to_binary(4),decimal_to_binary(5));
-  
-  //тест
-  /*
-  for(int i = 0; i < length; i++){
-     cout<<filename[i]<<endl;
-  } 
-  */    
-  //cout<<decimal_to_binary(14)<<endl;
-  //cout<<binary_to_decimal("101101011")<<endl;
-  
-  /*
-  vector<string> res = split_string("1,2,3,4,5");
-  for(int i = 0; i < 5; i++){
-     cout<<res[i]<<endl;
-  }
-  */
-  
   return 0;
  }
 
