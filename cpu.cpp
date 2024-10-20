@@ -426,15 +426,30 @@ string multiply(string a, string b) {
      
      int origin = stoi(commands.substr(0,10), NULL, 2);
      int words_amount = stoi(commands.substr(10,10), NULL, 2);
+     //...
+     
      int bit_position = 20;
      address = origin;
       
-     for(int i = 0; i <= words_amount; i++) {
-     
+     for(int i = 1; i <= words_amount; i++) {
+        if(bit_position + 16 > commands.size()) {
+            cout << "Error: Attempting to read beyond the length of commands." << endl;
+            break;
+        }
+        
         string command = commands.substr(bit_position, 16);
         memory[address] = command;
         address++;
-        bit_position += 16;     
+        bit_position += 16;    
+        
+        cout << "Bit position: " << bit_position << endl;
+        cout << "Length of commands: " << commands.size() << endl;
+     }
+     
+     for(int j = 0; j < MEMORY_SIZE; j++) {
+         if(!memory[j].empty()) {
+             cout << "Memory[" << memory.at(j) << "]"<<endl;
+         }
      }
      
      cout << "ORIGIN: " << origin <<endl;
@@ -475,7 +490,7 @@ string multiply(string a, string b) {
   string mar = "0000000000";
   string mbr = "0000000000000000";
   
-  for(int i = 0; i == 0; ){
+  for(int flag = 0; flag == 0;  ){
   instruction_register = read_from_memory(memory, program_counter);//
   string code = operation_field(instruction_register);
   string code_address_mode_field = address_mode_field(instruction_register);
@@ -501,7 +516,7 @@ string multiply(string a, string b) {
   
   if(code == "0000"){
     //HALT
-    i++;
+    flag = 1;
   }
   else if(code == "0001"){//возьмем поле адреса и значение по этому адресу из памяти, запишем в аккумулятор
     //LOAD
@@ -568,6 +583,7 @@ string multiply(string a, string b) {
   }
   else if(code == "1011"){
     //DIV
+    throw logic_error("div function not implemented");
   }
   else{
     throw logic_error("error: exception at line " + to_string(__LINE__));
@@ -614,19 +630,28 @@ string multiply(string a, string b) {
   
   
   //vector<string>memory(1024, "0000000000000000");
+  if(length == 2) {
+      cout << "Length: " << length << endl;
+      array<string, MEMORY_SIZE> memory;
+      reading_outfile(memory, filename[1]);
   
+      main_loop(memory);
   
-  array<string, MEMORY_SIZE> memory;
-  reading_outfile(memory, filename[1]);
+      for(int i = 0; i < MEMORY_SIZE; i++){
+         if(!memory[i].empty()){
+            cout<<memory[i]<<endl;
+      }
+      }
   
-  main_loop(memory);
-  
-  for(int i = 0; i < MEMORY_SIZE; i++){
-     if(!memory[i].empty()){
-        cout<<memory[i]<<endl;
-     }
-  }
-  
-  return 0;
+      return 0;
+ }
+ else
+     throw logic_error("number of argumens is wrong");
+     
+     
+     
+     
+     
+     
  }
 

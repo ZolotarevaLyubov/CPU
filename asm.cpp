@@ -43,7 +43,7 @@ using namespace std;
      command_map ["DIV"] = "1011";
    
    regex pattern(R"(^([A-Z]+)\s+([$@=]?)(\d+)+(\s?)+$)");   
-   regex pattern_without_operand("^([A-Z]+)$");
+   regex pattern_without_operand("^HALT$");
    
    smatch matches;
    if(regex_match(mnemonic, matches, pattern)){
@@ -81,11 +81,8 @@ using namespace std;
    }
    //HALT
    else if(regex_match(mnemonic, matches, pattern_without_operand)){
-          string command = matches[1];
-      
-          if(command == "HALT"){
-             return "0000000000000000";
-           } 
+          return "0000000000000000";
+           
    }
    else 
       throw logic_error("error: regex_converting " + to_string(__LINE__));   
@@ -219,10 +216,18 @@ using namespace std;
  }
  
  int main(int length, char *filename[]) {
+ if(length == 3) {
    vector<string>memory;
    
    load_program_from_file(filename[1], filename[2], memory);
 
    return 0;
+  }
+ else
+   throw logic_error("number of arguments is wrong"); 
+  
+  
+  
+   
  }
   
