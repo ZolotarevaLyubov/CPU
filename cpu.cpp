@@ -412,7 +412,7 @@ string multiply(string a, string b) {
  
  void reading_outfile(array<string, MEMORY_SIZE> &memory, const char *filename) {
      ifstream file(filename);
-     string line;
+     //string line;
      int address = 0;
      
      if(!file) {
