@@ -386,7 +386,7 @@ string multiply(string a, string b) {
  string &read_from_memory(array<string, MEMORY_SIZE> &memory, string program_counter){
    int index = stoi(program_counter, NULL, 2);
    
-   if(index < 0 || index >= 1024){
+   if(index < 0 || index >= MEMORY_SIZE){
      throw invalid_argument("error: program counter is out of range");
    }
    return memory[index];
@@ -445,12 +445,13 @@ string multiply(string a, string b) {
         cout << "Bit position: " << bit_position << endl;
         cout << "Length of commands: " << commands.size() << endl;
      }
-     
+     /*
      for(int j = 0; j < MEMORY_SIZE; j++) {
          if(!memory[j].empty()) {
              cout << "Memory[" << memory.at(j) << "]"<<endl;
          }
      }
+     */
      
      cout << "ORIGIN: " << origin <<endl;
      cout << "WORDS AMOUNT: " << words_amount <<endl;
@@ -483,6 +484,8 @@ string multiply(string a, string b) {
   arr[8] = "0000000000000000";
   */
   
+   
+  
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
@@ -513,6 +516,12 @@ string multiply(string a, string b) {
   }
   
     program_counter = increment(program_counter);
+  
+  for(int j = 0; j < MEMORY_SIZE; j++) {
+         if(!memory[j].empty()) {
+             cout << "Memory[" << memory.at(j) << "]"<<endl;
+         }
+     }
   
   if(code == "0000"){
     //HALT
