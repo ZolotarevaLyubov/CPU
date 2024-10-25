@@ -484,11 +484,16 @@ string multiply(string a, string b) {
   arr[8] = "0000000000000000";
   */
   
-   
+   for(int j = 0; j < MEMORY_SIZE; j++) {
+         if(!memory[j].empty()) {
+             cout << "Memory[" << memory.at(j) << "]"<<endl;
+         }
+     }  
   
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
+  string index_register = "0000000000";
   
   string mar = "0000000000";
   string mbr = "0000000000000000";
@@ -507,7 +512,8 @@ string multiply(string a, string b) {
     
   }
   else if (code_address_mode_field == "10"){
-    cout<<"indexed mode of addressing is not implemented"<<endl;
+    mar = address_field(instruction_register);
+    mar = addition(index_register, mar);
   }
   else if (code_address_mode_field == "11"){
     mar = address_field(instruction_register);
@@ -516,12 +522,6 @@ string multiply(string a, string b) {
   }
   
     program_counter = increment(program_counter);
-  
-  for(int j = 0; j < MEMORY_SIZE; j++) {
-         if(!memory[j].empty()) {
-             cout << "Memory[" << memory.at(j) << "]"<<endl;
-         }
-     }
   
   if(code == "0000"){
     //HALT
@@ -540,6 +540,12 @@ string multiply(string a, string b) {
     //STORE
     mbr = accumulator;
     read_from_memory(memory, mar) = mbr;//
+    if(mar == "0000000001") {
+        index_register = address_field(mbr);
+    }
+    if(mar == "0000000000") {
+        accumulator = mbr;
+    }
   }
   else if(code == "0011"){
     //CALL
@@ -606,6 +612,10 @@ string multiply(string a, string b) {
   }
   cout<<"accumulator: "<<accumulator<<endl;
  }
+ 
+ 
+ //make_instr("ADD","@",100) -> "??????????????" (16 bit)
+ //make_instr(название инструкции,способ адресации,номер ячейки (address field (десятичное число)))
  
  int main( int length, char *filename[]) {
   //cout << binary_to_decimal(multiply("11010", "00011")) << endl;//-5*3
