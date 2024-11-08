@@ -407,6 +407,77 @@ string multiply(string a, string b) {
 // LOAD 42
 // DATA 13,42,666     -> "13","42","666"
  
+ //make_instr("ADD","@",100) -> "??????????????" (16 bit)
+ //make_instr(название инструкции,способ адресации,номер ячейки (address field (десятичное число)))
+ 
+ string make_instr (string name, string addressing, int cell_number) {
+     string binary;
+     
+      if(name == "HALT"){binary.push_back("0000");}
+      else if(name == "LOAD"){binary.push_back("0001");}
+      else if(name == "STORE"){binary.push_back("0010");}
+      else if(name == "CALL"){binary.push_back("0011");}
+      else if(name == "BR"){binary.push_back("0100");}
+      else if(name == "BREQ"){binary.push_back("0101");}
+      else if(name == "BRGE"){binary.push_back("0110");}
+      else if(name == "BRLT"){binary.push_back("0111");}
+      else if(name == "ADD"){binary.push_back("1000");}
+      else if(name == "SUB"){binary.push_back("1001");}
+      else if(name == "MUL"){binary.push_back("1010");}
+      else if(name == "DIV"){binary.push_back("1011");} 
+      
+      if(addressing == " "){binary.push_back("00");}
+      else if(addressing == "="){binary.push_back("01");}     
+      else if(addressing == "$"){binary.push_back("10");}     
+      else if(addressing == "@"){binary.push_back("11");}
+      
+      binary.push_back(decimal_to_binary(cell_number, 10));
+      
+      return binary;     
+ }
+ 
+ voad load_xr_sample_program(array<string, MEMORY_SIZE> &memory) {
+     /*
+         size of arrays = 10| 41
+         base address of first array 20
+         base address of second array 30
+         base address of sum array 40
+         
+     */
+     memory[2] = make_inst("LOAD", "=", 0);
+     memory[3] = make_instr("STORE", " ", 1);
+     memory[4] = make_instr("SUB", " ", 41);
+     memory[5] = make_instr("BRGE", " ", 12);
+     memory[6] = make_instr("LOAD", "$", 20);
+     memory[7] = make_instr("ADD", "$", 30);
+     memory[8] = make_instr("STORE", "$", 40);
+     memory[9] = make_instr("LOAD", " ", 1);
+     memory[10] = make_instr("ADD", "=", 1);
+     memory[11] = make_instr("BR", " ", 3);
+     memory[12] = make_instr("HALT", " ", 0);
+     
+     memory[20] = decimal_to_binary(100, 10);
+     memory[21] = decimal_to_binary(183, 10);
+     memory[22] = decimal_to_binary(73, 10);
+     memory[23] = decimal_to_binary(84, 10);
+     memory[24] = decimal_to_binary(178, 10);
+     memory[25] = decimal_to_binary(85, 10);
+     memory[26] = decimal_to_binary(92, 10);
+     memory[27] = decimal_to_binary(43, 10);
+     memory[28] = decimal_to_binary(436, 10);
+     memory[29] = decimal_to_binary(437, 10);
+     memory[30] = decimal_to_binary(95, 10);
+     memory[31] = decimal_to_binary(26, 10);
+     memory[32] = decimal_to_binary(95, 10);
+     memory[33] = decimal_to_binary(64, 10);
+     memory[34] = decimal_to_binary(93, 10);
+     memory[35] = decimal_to_binary(48, 10);
+     memory[36] = decimal_to_binary(382, 10);
+     memory[37] = decimal_to_binary(846, 10);
+     memory[38] = decimal_to_binary(267, 10);
+     memory[39] = decimal_to_binary(934, 10);
+     memory[40] = decimal_to_binary(389, 10);           
+ }
  
  //"12,42,67" -> "12","42","67"
  
@@ -483,25 +554,27 @@ string multiply(string a, string b) {
   arr[7] = "0000000000000000";
   arr[8] = "0000000000000000";
   */
-  
-   for(int j = 0; j < MEMORY_SIZE; j++) {
-         if(!memory[j].empty()) {
-             cout << "Memory[" << memory.at(j) << "]"<<endl;
-         }
-     }  
-  
+    
   string program_counter = "0000000000";
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
   string index_register = "0000000000";
   
+  
   string mar = "0000000000";
   string mbr = "0000000000000000";
   
   for(int flag = 0; flag == 0;  ){
+  
   instruction_register = read_from_memory(memory, program_counter);//
   string code = operation_field(instruction_register);
   string code_address_mode_field = address_mode_field(instruction_register);
+  
+  for(int j = 0; j < MEMORY_SIZE; j++) {
+         if(!memory[j].empty()) {
+             cout << "Memory[" << memory.at(j) << "]"<<endl;
+         }
+     }  
   
   if(code_address_mode_field == "00"){
     mar = address_field(instruction_register);
@@ -614,8 +687,7 @@ string multiply(string a, string b) {
  }
  
  
- //make_instr("ADD","@",100) -> "??????????????" (16 bit)
- //make_instr(название инструкции,способ адресации,номер ячейки (address field (десятичное число)))
+ 
  
  int main( int length, char *filename[]) {
   //cout << binary_to_decimal(multiply("11010", "00011")) << endl;//-5*3
