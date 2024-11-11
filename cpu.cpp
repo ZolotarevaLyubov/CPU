@@ -353,6 +353,9 @@ string multiply(string a, string b) {
  }
  
  string address_mode_field(string a){
+   cout << "address mode field " << a << endl;
+   string res = a.substr(4,2);
+   cout << "result " << res << endl;
    return a.substr(4,2);
  }
  
@@ -389,6 +392,7 @@ string multiply(string a, string b) {
    if(index < 0 || index >= MEMORY_SIZE){
      throw invalid_argument("error: program counter is out of range");
    }
+  
    return memory[index];
  }
  
@@ -409,7 +413,7 @@ string multiply(string a, string b) {
  
  //make_instr("ADD","@",100) -> "??????????????" (16 bit)
  //make_instr(название инструкции,способ адресации,номер ячейки (address field (десятичное число)))
- 
+ /*
  string make_instr (string name, string addressing, int cell_number) {
      string binary;
      
@@ -436,15 +440,16 @@ string multiply(string a, string b) {
       return binary;     
  }
  
- voad load_xr_sample_program(array<string, MEMORY_SIZE> &memory) {
-     /*
-         size of arrays = 10| 41
-         base address of first array 20
-         base address of second array 30
-         base address of sum array 40
+ 
+ void load_xr_sample_program(array<string, MEMORY_SIZE> &memory) {
+     
+    //     size of arrays = 10| 41
+    //     base address of first array 20
+    //     base address of second array 30
+    //     base address of sum array 40
          
-     */
-     memory[2] = make_inst("LOAD", "=", 0);
+     
+     memory[2] = make_instr("LOAD", "=", 0);
      memory[3] = make_instr("STORE", " ", 1);
      memory[4] = make_instr("SUB", " ", 41);
      memory[5] = make_instr("BRGE", " ", 12);
@@ -478,6 +483,7 @@ string multiply(string a, string b) {
      memory[39] = decimal_to_binary(934, 10);
      memory[40] = decimal_to_binary(389, 10);           
  }
+ */
  
  //"12,42,67" -> "12","42","67"
  
@@ -565,12 +571,20 @@ string multiply(string a, string b) {
   string mbr = "0000000000000000";
   
   for(int flag = 0; flag == 0;  ){
-  
-  instruction_register = read_from_memory(memory, program_counter);//
+
+    for(int j = 0; j < MEMORY_SIZE; j++) {
+         if(!memory[j].empty()) {
+             cout << "Memory[" << memory.at(j) << "]"<<endl;
+         }
+     }  
+    
+  instruction_register = read_from_memory(memory, program_counter);//  
+  cout << "instruction register " << instruction_register << endl;
   string code = operation_field(instruction_register);
+  cout << "code " << code << endl;
   string code_address_mode_field = address_mode_field(instruction_register);
   
-  for(int j = 0; j < MEMORY_SIZE; j++) {
+      for(int j = 0; j < MEMORY_SIZE; j++) {
          if(!memory[j].empty()) {
              cout << "Memory[" << memory.at(j) << "]"<<endl;
          }
