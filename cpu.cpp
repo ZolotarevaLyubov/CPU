@@ -579,9 +579,9 @@ string multiply(string a, string b) {
      }  
     
   instruction_register = read_from_memory(memory, program_counter);//  
-  cout << "instruction register " << instruction_register << endl;
+ 
   string code = operation_field(instruction_register);
-  cout << "code " << code << endl;
+  
   string code_address_mode_field = address_mode_field(instruction_register);
   
       for(int j = 0; j < MEMORY_SIZE; j++) {
