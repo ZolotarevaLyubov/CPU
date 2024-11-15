@@ -571,13 +571,7 @@ string multiply(string a, string b) {
   string mbr = "0000000000000000";
   
   for(int flag = 0; flag == 0;  ){
-
-    for(int j = 0; j < MEMORY_SIZE; j++) {
-         if(!memory[j].empty()) {
-             cout << "Memory[" << memory.at(j) << "]"<<endl;
-         }
-     }  
-    
+     
   instruction_register = read_from_memory(memory, program_counter);//  
  
   string code = operation_field(instruction_register);
