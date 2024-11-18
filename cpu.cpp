@@ -413,29 +413,29 @@ string multiply(string a, string b) {
  
  //make_instr("ADD","@",100) -> "??????????????" (16 bit)
  //make_instr(название инструкции,способ адресации,номер ячейки (address field (десятичное число)))
- /*
+ 
  string make_instr (string name, string addressing, int cell_number) {
      string binary;
      
-      if(name == "HALT"){binary.push_back("0000");}
-      else if(name == "LOAD"){binary.push_back("0001");}
-      else if(name == "STORE"){binary.push_back("0010");}
-      else if(name == "CALL"){binary.push_back("0011");}
-      else if(name == "BR"){binary.push_back("0100");}
-      else if(name == "BREQ"){binary.push_back("0101");}
-      else if(name == "BRGE"){binary.push_back("0110");}
-      else if(name == "BRLT"){binary.push_back("0111");}
-      else if(name == "ADD"){binary.push_back("1000");}
-      else if(name == "SUB"){binary.push_back("1001");}
-      else if(name == "MUL"){binary.push_back("1010");}
-      else if(name == "DIV"){binary.push_back("1011");} 
+      if(name == "HALT"){binary.append("0000");}
+      else if(name == "LOAD"){binary.append("0001");}
+      else if(name == "STORE"){binary.append("0010");}
+      else if(name == "CALL"){binary.append("0011");}
+      else if(name == "BR"){binary.append("0100");}
+      else if(name == "BREQ"){binary.append("0101");}
+      else if(name == "BRGE"){binary.append("0110");}
+      else if(name == "BRLT"){binary.append("0111");}
+      else if(name == "ADD"){binary.append("1000");}
+      else if(name == "SUB"){binary.append("1001");}
+      else if(name == "MUL"){binary.append("1010");}
+      else if(name == "DIV"){binary.append("1011");} 
       
-      if(addressing == " "){binary.push_back("00");}
-      else if(addressing == "="){binary.push_back("01");}     
-      else if(addressing == "$"){binary.push_back("10");}     
-      else if(addressing == "@"){binary.push_back("11");}
+      if(addressing == " "){binary.append("00");}
+      else if(addressing == "="){binary.append("01");}     
+      else if(addressing == "$"){binary.append("10");}     
+      else if(addressing == "@"){binary.append("11");}
       
-      binary.push_back(decimal_to_binary(cell_number, 10));
+      binary.append(decimal_to_binary(cell_number, 10));
       
       return binary;     
  }
@@ -483,7 +483,7 @@ string multiply(string a, string b) {
      memory[39] = decimal_to_binary(934, 10);
      memory[40] = decimal_to_binary(389, 10);           
  }
- */
+ 
  
  //"12,42,67" -> "12","42","67"
  
@@ -729,6 +729,8 @@ string multiply(string a, string b) {
   
   
   //vector<string>memory(1024, "0000000000000000");
+  //проверка main_loop (пока не работает))
+  /*
   if(length == 2) {
       cout << "Length: " << length << endl;
       array<string, MEMORY_SIZE> memory;
@@ -746,7 +748,23 @@ string multiply(string a, string b) {
  }
  else
      throw logic_error("number of argumens is wrong");
-     
+  */
+  
+  array<string, MEMORY_SIZE> memory;
+  for (auto &cell : memory) {
+      cell = "0000000000000000";
+  }
+  
+  load_xr_sample_program(memory);
+  
+  int pc = 2;
+  cout << "Program_counter at PC = " << pc << endl;
+  int second_array_base = 30;
+  int second_array_size = 10;     
+  
+  for (int i = 0; i < second_array_size; i++) {
+      cout << "Cell " << (second_array_base + i) << ": " << memory[second_array_base + i] << endl;
+  }
      
      
      
