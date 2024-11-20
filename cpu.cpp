@@ -461,29 +461,36 @@ string multiply(string a, string b) {
      memory[11] = make_instr("BR", " ", 3);
      memory[12] = make_instr("HALT", " ", 0);
      
-     memory[20] = decimal_to_binary(100, 10);
-     memory[21] = decimal_to_binary(183, 10);
-     memory[22] = decimal_to_binary(73, 10);
-     memory[23] = decimal_to_binary(84, 10);
-     memory[24] = decimal_to_binary(178, 10);
-     memory[25] = decimal_to_binary(85, 10);
-     memory[26] = decimal_to_binary(92, 10);
-     memory[27] = decimal_to_binary(43, 10);
-     memory[28] = decimal_to_binary(436, 10);
-     memory[29] = decimal_to_binary(437, 10);
-     memory[30] = decimal_to_binary(95, 10);
-     memory[31] = decimal_to_binary(26, 10);
-     memory[32] = decimal_to_binary(95, 10);
-     memory[33] = decimal_to_binary(64, 10);
-     memory[34] = decimal_to_binary(93, 10);
-     memory[35] = decimal_to_binary(48, 10);
-     memory[36] = decimal_to_binary(382, 10);
-     memory[37] = decimal_to_binary(846, 10);
-     memory[38] = decimal_to_binary(267, 10);
-     memory[39] = decimal_to_binary(934, 10);
-     memory[40] = decimal_to_binary(389, 10);           
+     memory[20] = decimal_to_binary(100, 16);
+     memory[21] = decimal_to_binary(183, 16);
+     memory[22] = decimal_to_binary(73, 16);
+     memory[23] = decimal_to_binary(84, 16);
+     memory[24] = decimal_to_binary(178, 16);
+     memory[25] = decimal_to_binary(85, 16);
+     memory[26] = decimal_to_binary(92, 16);
+     memory[27] = decimal_to_binary(43, 16);
+     memory[28] = decimal_to_binary(436, 16);
+     memory[29] = decimal_to_binary(437, 16);
+     memory[30] = decimal_to_binary(95, 16);
+     memory[31] = decimal_to_binary(26, 16);
+     memory[32] = decimal_to_binary(95, 16);
+     memory[33] = decimal_to_binary(64, 16);
+     memory[34] = decimal_to_binary(93, 16);
+     memory[35] = decimal_to_binary(48, 16);
+     memory[36] = decimal_to_binary(382, 16);
+     memory[37] = decimal_to_binary(846, 16);
+     memory[38] = decimal_to_binary(267, 16);
+     memory[39] = decimal_to_binary(934, 16);
+     //memory[40] = decimal_to_binary(389, 16);           
  }
  
+ void print_arr(array<string, MEMORY_SIZE> &memory, int array_base, int array_size) {
+     
+     for(int i = 0; i < array_size; i++) {
+         cout << "Cell " << (array_base + i) << ": " << memory[array_base + i] << "| " << binary_to_decimal(memory[array_base + i]) << endl;         
+     }
+     
+ }
  
  //"12,42,67" -> "12","42","67"
  
@@ -536,7 +543,18 @@ string multiply(string a, string b) {
      file.close();              
  }
 
- void main_loop(array<string, MEMORY_SIZE> &memory){
+ void print_registers(bool highlight, string instruction_register, string program_counter, string accumulator, string index_register) {           
+       
+  cout<<"IR: "<<(highlight == true? highlight_ir(instruction_register) : instruction_register) <<" ";
+  binary_to_mnemonic(instruction_register);
+  
+  cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
+  cout<<"AC: "<<accumulator<<"("<<binary_to_decimal(accumulator)<<")"<< endl;
+  cout<<"XR: "<< index_register << "(" << binary_to_decimal(index_register) << ")" <<endl;
+     
+ }
+
+ void main_loop(array<string, MEMORY_SIZE> &memory, int pc){
 //  string arr[1024];
   /*
   for(int i = 0; i <= 1024; i++){
@@ -561,7 +579,7 @@ string multiply(string a, string b) {
   arr[8] = "0000000000000000";
   */
     
-  string program_counter = "0000000000";
+  string program_counter = decimal_to_binary(pc, 10);
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
   string index_register = "0000000000";
@@ -577,12 +595,7 @@ string multiply(string a, string b) {
   string code = operation_field(instruction_register);
   
   string code_address_mode_field = address_mode_field(instruction_register);
-  
-      for(int j = 0; j < MEMORY_SIZE; j++) {
-         if(!memory[j].empty()) {
-             cout << "Memory[" << memory.at(j) << "]"<<endl;
-         }
-     }  
+   
   
   if(code_address_mode_field == "00"){
     mar = address_field(instruction_register);
@@ -684,14 +697,9 @@ string multiply(string a, string b) {
   else{
     throw logic_error("error: exception at line " + to_string(__LINE__));
   }
-
-  cout<<"IR: "<<highlight_ir(instruction_register)<<" ";
-  binary_to_mnemonic(instruction_register);
-  
-  cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
-  cout<<"AC: "<<accumulator<<"("<<binary_to_decimal(accumulator)<<")"<< endl;
-  }
-  cout<<"accumulator: "<<accumulator<<endl;
+  print_registers(false, instruction_register, program_counter, accumulator, index_register);
+ }
+ cout<<"accumulator: "<<accumulator<<endl;  
  }
  
  
@@ -754,17 +762,16 @@ string multiply(string a, string b) {
   for (auto &cell : memory) {
       cell = "0000000000000000";
   }
-  
   load_xr_sample_program(memory);
+  main_loop(memory, 2);
   
-  int pc = 2;
-  cout << "Program_counter at PC = " << pc << endl;
-  int second_array_base = 30;
-  int second_array_size = 10;     
   
-  for (int i = 0; i < second_array_size; i++) {
-      cout << "Cell " << (second_array_base + i) << ": " << memory[second_array_base + i] << endl;
-  }
+  cout << "First array" << endl;
+  print_arr(memory, 20, 10);
+  cout << "Second array" << endl;
+  print_arr(memory, 30, 10);     
+  cout << "Sum" << endl;
+  print_arr(memory, 40, 10);
      
      
      
