@@ -353,9 +353,9 @@ string multiply(string a, string b) {
  }
  
  string address_mode_field(string a){
-   cout << "address mode field " << a << endl;
+   //cout << "address mode field " << a << endl;
    string res = a.substr(4,2);
-   cout << "result " << res << endl;
+   //cout << "result " << res << endl;
    return a.substr(4,2);
  }
  
@@ -366,18 +366,30 @@ string multiply(string a, string b) {
  void binary_to_mnemonic(string binary){
    string operation = operation_field(binary);
    int num = stoi(address_field(binary), NULL, 2);
-   if(operation == "0000"){cout<<"HALT"<<endl;}
-   else if(operation == "0001"){cout<<"(LOAD"<<" "<<num<<")";}//
-   else if(operation == "0010"){cout<<"(STORE"<<" "<<num<<")";}//
-   else if(operation == "0011"){cout<<"(CALL"<<" "<<num<<")";}
-   else if(operation == "0100"){cout<<"(BR"<<" "<<num<<")";}
-   else if(operation == "0101"){cout<<"(BREQ"<<" "<<num<<")";}
-   else if(operation == "0110"){cout<<"(BRGE"<<" "<<num<<")";}
-   else if(operation == "0111"){cout<<"(BRLT"<<" "<<num<<")";}
-   else if(operation == "1000"){cout<<"(ADD"<<" "<<num<<")";}//
-   else if(operation == "1001"){cout<<"(SUB"<<" "<<num<<")";}//
-   else if(operation == "1010"){cout<<"(MUL"<<" "<<num<<")";}//
-   else if(operation == "1011"){cout<<"(DIV"<<" "<<num<<")";}
+   string address_mode = address_mode_field(binary);
+   string sign;
+   
+   if(address_mode == "00"){sign = "";}
+   else if(address_mode == "01"){sign = "=";}
+   else if(address_mode == "10"){sign = "$";}
+   else if(address_mode == "11"){sign = "@";}
+   
+   if(operation == "0000"){ cout << "HALT" << endl;}
+   else if(operation == "0001"){ cout << "(LOAD " ; }//
+   else if(operation == "0010"){ cout << "(STORE "; }//
+   else if(operation == "0011"){ cout << "(CALL " ; }
+   else if(operation == "0100"){ cout << "(BR " ; }
+   else if(operation == "0101"){ cout << "(BREQ " ; }
+   else if(operation == "0110"){ cout << "(BRGE " ; }
+   else if(operation == "0111"){ cout << "(BRLT " ; }
+   else if(operation == "1000"){ cout << "(ADD " ; }//
+   else if(operation == "1001"){ cout << "(SUB " ; }//
+   else if(operation == "1010"){ cout << "(MUL " ; }//
+   else if(operation == "1011"){ cout << "(DIV " ; }
+   
+   
+   if(operation != "0000")
+       cout << sign << num << ")";
  }
  
  string highlight_ir(string ir){
@@ -470,11 +482,11 @@ string multiply(string a, string b) {
         string opcode_and_mode = binary_instruction.substr(0, 6); // Опкод + режим адресации (6 бит)
         string operand = binary_instruction.substr(6);           // Операнд/адрес (10 бит)
 
-                 // Расшифровка опкода и режима адресации
+                
         cout << "Instruction " << i + origin << ": ";
-        binary_to_mnemonic(opcode_and_mode); // Обрабатывает название инструкции и способ адресации
+        binary_to_mnemonic(opcode_and_mode); 
 
-                 // Обработка операнда (числа)
+                
         int operand_decimal = stoi(operand, nullptr, 2);
         cout << " " << operand_decimal << endl;       
         // cout << binary_to_mnemonic(binary_instruction) << endl;
@@ -491,7 +503,7 @@ string multiply(string a, string b) {
      
      memory[2] = make_instr("LOAD", "=", 0);
      memory[3] = make_instr("STORE", " ", 1);
-     memory[4] = make_instr("SUB", " ", 41);
+     memory[4] = make_instr("SUB", "=", 10);
      memory[5] = make_instr("BRGE", " ", 12);
      memory[6] = make_instr("LOAD", "$", 20);
      memory[7] = make_instr("ADD", "$", 30);
@@ -588,8 +600,8 @@ string multiply(string a, string b) {
   cout<<"IR: "<<(highlight == true? highlight_ir(instruction_register) : instruction_register) <<" ";
   binary_to_mnemonic(instruction_register);
   
-  cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<")";
-  cout<<"AC: "<<accumulator<<"("<<binary_to_decimal(accumulator)<<")"<< endl;
+  cout<<"PC: "<<program_counter<<"("<<stoi(program_counter, NULL,2)<<") ";
+  cout<<"AC: "<<accumulator<<"("<<binary_to_decimal(accumulator)<<") ";
   cout<<"XR: "<< index_register << "(" << binary_to_decimal(index_register) << ")" <<endl;
      
  }
@@ -798,7 +810,7 @@ string multiply(string a, string b) {
      throw logic_error("number of argumens is wrong");
   */
   
-  /*
+  
   array<string, MEMORY_SIZE> memory;
   for (auto &cell : memory) {
       cell = "0000000000000000";
@@ -813,9 +825,9 @@ string multiply(string a, string b) {
   print_arr(memory, 30, 10);     
   cout << "Sum" << endl;
   print_arr(memory, 40, 10);
-  */     
+    
      
-  disassemble_outfile(filename[1]) ;    
+  //disassemble_outfile(filename[1]) ;    
      
      
  }
