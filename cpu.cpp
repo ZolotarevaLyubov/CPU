@@ -440,6 +440,46 @@ string multiply(string a, string b) {
       return binary;     
  }
  
+ void disassemble_outfile(const char *filename) {
+     ifstream file(filename);
+     if (!file) {
+         cout << "error: " << __LINE__ << endl;
+     }
+     
+     stringstream buffer;
+     buffer << file.rdbuf();
+     string commands = buffer.str();
+ 
+     int origin = stoi(commands.substr(0,10), NULL, 2);
+     int words_amount = stoi(commands.substr(10,10), NULL, 2);
+    
+     cout << "Words amount: " << words_amount << endl;
+     
+     int bit_position = 20;
+     
+      
+     for(int i = 1; i <= words_amount; i++) {
+        if(bit_position + 16 > commands.size()) {
+            cout << "Error: Attempting to read beyond the length of commands." << __LINE__ << endl;
+            break;
+        }
+        
+        string binary_instruction = commands.substr(bit_position, 16);
+        bit_position += 16;
+        
+        string opcode_and_mode = binary_instruction.substr(0, 6); // Опкод + режим адресации (6 бит)
+        string operand = binary_instruction.substr(6);           // Операнд/адрес (10 бит)
+
+                 // Расшифровка опкода и режима адресации
+        cout << "Instruction " << i + origin << ": ";
+        binary_to_mnemonic(opcode_and_mode); // Обрабатывает название инструкции и способ адресации
+
+                 // Обработка операнда (числа)
+        int operand_decimal = stoi(operand, nullptr, 2);
+        cout << " " << operand_decimal << endl;       
+        // cout << binary_to_mnemonic(binary_instruction) << endl;
+    }
+ }
  
  void load_xr_sample_program(array<string, MEMORY_SIZE> &memory) {
      
@@ -758,6 +798,7 @@ string multiply(string a, string b) {
      throw logic_error("number of argumens is wrong");
   */
   
+  /*
   array<string, MEMORY_SIZE> memory;
   for (auto &cell : memory) {
       cell = "0000000000000000";
@@ -772,9 +813,9 @@ string multiply(string a, string b) {
   print_arr(memory, 30, 10);     
   cout << "Sum" << endl;
   print_arr(memory, 40, 10);
+  */     
      
-     
-     
+  disassemble_outfile(filename[1]) ;    
      
      
  }
