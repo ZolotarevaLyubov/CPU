@@ -500,7 +500,6 @@ string multiply(string a, string b) {
     //     base address of second array 30
     //     base address of sum array 40
          
-     
      memory[2] = make_instr("LOAD", "=", 0);
      memory[3] = make_instr("STORE", " ", 1);
      memory[4] = make_instr("SUB", "=", 10);
