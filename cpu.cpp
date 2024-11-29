@@ -462,8 +462,8 @@ string multiply(string a, string b) {
      buffer << file.rdbuf();
      string commands = buffer.str();
  
-     int origin = stoi(commands.substr(0,10), NULL, 2);
-     int words_amount = stoi(commands.substr(10,10), NULL, 2);
+     int origin = (binary_to_decimal(commands.substr(0,10)));
+     int words_amount = binary_to_decimal(commands.substr(10,10));
     
      cout << "Words amount: " << words_amount << endl;
      
@@ -477,19 +477,11 @@ string multiply(string a, string b) {
         }
         
         string binary_instruction = commands.substr(bit_position, 16);
+        binary_to_mnemonic(binary_instruction);
+        cout << endl;
+        
         bit_position += 16;
         
-        string opcode_and_mode = binary_instruction.substr(0, 6); // Опкод + режим адресации (6 бит)
-        string operand = binary_instruction.substr(6);           // Операнд/адрес (10 бит)
-
-                
-        cout << "Instruction " << i + origin << ": ";
-        binary_to_mnemonic(opcode_and_mode); 
-
-                
-        int operand_decimal = stoi(operand, nullptr, 2);
-        cout << " " << operand_decimal << endl;       
-        // cout << binary_to_mnemonic(binary_instruction) << endl;
     }
  }
  
@@ -795,7 +787,7 @@ string multiply(string a, string b) {
       array<string, MEMORY_SIZE> memory;
       reading_outfile(memory, filename[1]);
   
-      main_loop(memory);
+      main_loop(memory,0);
   
       for(int i = 0; i < MEMORY_SIZE; i++){
          if(!memory[i].empty()){
@@ -809,7 +801,7 @@ string multiply(string a, string b) {
      throw logic_error("number of argumens is wrong");
   */
   
-  
+  /*
   array<string, MEMORY_SIZE> memory;
   for (auto &cell : memory) {
       cell = "0000000000000000";
@@ -824,9 +816,9 @@ string multiply(string a, string b) {
   print_arr(memory, 30, 10);     
   cout << "Sum" << endl;
   print_arr(memory, 40, 10);
-    
+  */    
      
-  //disassemble_outfile(filename[1]) ;    
+  disassemble_outfile(filename[1]) ;    
      
      
  }
