@@ -374,7 +374,7 @@ string multiply(string a, string b) {
    else if(address_mode == "10"){sign = "$";}
    else if(address_mode == "11"){sign = "@";}
    
-   if(operation == "0000"){ cout << "HALT" << endl;}
+   if(operation == "0000"){ cout << "HALT" ;}
    else if(operation == "0001"){ cout << "(LOAD " ; }//
    else if(operation == "0010"){ cout << "(STORE "; }//
    else if(operation == "0011"){ cout << "(CALL " ; }
@@ -461,10 +461,11 @@ string multiply(string a, string b) {
      stringstream buffer;
      buffer << file.rdbuf();
      string commands = buffer.str();
+     
  
      int origin = (binary_to_decimal(commands.substr(0,10)));
      int words_amount = binary_to_decimal(commands.substr(10,10));
-    
+     cout << "ORG: " << origin << endl;
      cout << "Words amount: " << words_amount << endl;
      
      int bit_position = 20;
@@ -478,7 +479,7 @@ string multiply(string a, string b) {
         
         string binary_instruction = commands.substr(bit_position, 16);
         binary_to_mnemonic(binary_instruction);
-        cout << endl;
+        cout << "  " << binary_instruction << "  " << binary_to_decimal(binary_instruction) << endl;
         
         bit_position += 16;
         
@@ -630,6 +631,8 @@ string multiply(string a, string b) {
   
   string mar = "0000000000";
   string mbr = "0000000000000000";
+  
+  print_arr(memory, 0, 16);
   
   for(int flag = 0; flag == 0;  ){
      
@@ -802,10 +805,8 @@ string multiply(string a, string b) {
   */
   
   /*
-  array<string, MEMORY_SIZE> memory;
-  for (auto &cell : memory) {
-      cell = "0000000000000000";
-  }
+  
+  
   load_xr_sample_program(memory);
   main_loop(memory, 2);
   
@@ -817,8 +818,14 @@ string multiply(string a, string b) {
   cout << "Sum" << endl;
   print_arr(memory, 40, 10);
   */    
+  array<string, MEMORY_SIZE> memory;
+  for (auto &cell : memory) {
+      cell = "0000000000000000";
+  }
+  reading_outfile(memory, filename[1]);      
+  main_loop(memory, 10);    
      
-  disassemble_outfile(filename[1]) ;    
+  //disassemble_outfile(filename[1]) ;    
      
      
  }

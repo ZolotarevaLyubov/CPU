@@ -139,6 +139,8 @@ using namespace std;
      regex find_data(R"(^(DATA\s+(\d)+(,\d)+)+$)");
      //regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
      regex find_org(R"(^ORG\s+(\d+)$)");
+     //regex END 
+      
       
      // DATA 42,13  bla-BLA
      while(getline(file,line)){
