@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <regex>
@@ -822,6 +823,7 @@ string multiply(string a, string b) {
   for (auto &cell : memory) {
       cell = "0000000000000000";
   }
+  
   reading_outfile(memory, filename[1]);      
   main_loop(memory, 10);    
      
