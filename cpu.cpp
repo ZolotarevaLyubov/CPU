@@ -16,6 +16,7 @@ using namespace std;
 
 
  const int MEMORY_SIZE = 1024;
+ int PROGRAM_COUNTER;
 /*
  11 
  101
@@ -528,7 +529,50 @@ string multiply(string a, string b) {
      memory[39] = decimal_to_binary(934, 16);
      //memory[40] = decimal_to_binary(389, 16);           
  }
- 
+
+ void load_find_max_program(array<string, MEMORY_SIZE> &memory) {
+    // Размер массива: 10
+    // Базовый адрес массива: 20
+    // Адрес для сохранения максимального значения: 1
+
+    // Инициализация программы
+    memory[2] = make_instr("LOAD", "$", 20);   
+    memory[3] = make_instr("STORE", " ", 1); 
+    memory[4] = make_instr("LOAD", "=", 0);  
+    memory[5] = make_instr("STORE", " ", 2);  
+
+    memory[6] = make_instr("LOAD", " ", 2);   
+    memory[7] = make_instr("ADD", "=", 1);    
+    memory[8] = make_instr("STORE", " ", 2);  
+
+    memory[9] = make_instr("SUB", "=", 10);   
+    memory[10] = make_instr("BRGE", " ", 16); 
+
+    memory[11] = make_instr("LOAD", "$", 20); 
+    memory[12] = make_instr("ADD", " ", 2);   
+
+    memory[13] = make_instr("LOAD", "@", 20);
+    memory[14] = make_instr("SUB", " ", 1);   
+    memory[15] = make_instr("BRLT", " ", 6);  
+
+    memory[16] = make_instr("LOAD", "@", 20); 
+    memory[17] = make_instr("STORE", " ", 1); 
+    memory[18] = make_instr("BR", " ", 6);   
+
+    memory[19] = make_instr("HALT", " ", 0);  
+
+    // Инициализация массива
+    memory[20] = decimal_to_binary(100, 16);
+    memory[21] = decimal_to_binary(183, 16);
+    memory[22] = decimal_to_binary(73, 16);
+    memory[23] = decimal_to_binary(84, 16);
+    memory[24] = decimal_to_binary(178, 16);
+    memory[25] = decimal_to_binary(85, 16);
+    memory[26] = decimal_to_binary(92, 16);
+    memory[27] = decimal_to_binary(43, 16);
+    memory[28] = decimal_to_binary(436, 16);
+    memory[29] = decimal_to_binary(437, 16);
+}
  void print_arr(array<string, MEMORY_SIZE> &memory, int array_base, int array_size) {
      
      for(int i = 0; i < array_size; i++) {
@@ -553,11 +597,13 @@ string multiply(string a, string b) {
      string commands = buffer.str();
      cout << commands <<endl;
      
-     int origin = stoi(commands.substr(0,10), NULL, 2);
-     int words_amount = stoi(commands.substr(10,10), NULL, 2);
+     int end = stoi(commands.substr(0,10), NULL, 2);
+     PROGRAM_COUNTER = end;
+     int origin = stoi(commands.substr(10,10), NULL, 2);
+     int words_amount = stoi(commands.substr(20,10), NULL, 2);
      //...
      
-     int bit_position = 20;
+     int bit_position = 30;
      address = origin;
       
      for(int i = 1; i <= words_amount; i++) {
@@ -599,7 +645,7 @@ string multiply(string a, string b) {
      
  }
 
- void main_loop(array<string, MEMORY_SIZE> &memory, int pc){
+ void main_loop(array<string, MEMORY_SIZE> &memory){
 //  string arr[1024];
   /*
   for(int i = 0; i <= 1024; i++){
@@ -624,7 +670,7 @@ string multiply(string a, string b) {
   arr[8] = "0000000000000000";
   */
     
-  string program_counter = decimal_to_binary(pc, 10);
+  string program_counter = decimal_to_binary(PROGRAM_COUNTER, 10);
   string accumulator = "0000000000000000";
   string instruction_register = "0000000000000000";
   string index_register = "0000000000";
@@ -688,8 +734,20 @@ string multiply(string a, string b) {
         accumulator = mbr;
     }
   }
+  
+  //  5: 21 <---
+  //  6: add =1
+  //  7: br @5
+  
+  
+  // 20: call 5
+  
   else if(code == "0011"){
     //CALL
+    mbr = program_counter;
+    read_from_memory(memory, mar) = mbr;
+    program_counter = mar;
+    program_counter = increment(program_counter);
   }
   else if(code == "0100"){
     //BR    
@@ -806,9 +864,11 @@ string multiply(string a, string b) {
   */
   
   /*
-  
-  
-  load_xr_sample_program(memory);
+  array<string, MEMORY_SIZE> memory;
+  for (auto &cell : memory) {
+      cell = "0000000000000000";
+  }
+  load_find_max_program(memory);
   main_loop(memory, 2);
   
   
@@ -818,14 +878,15 @@ string multiply(string a, string b) {
   print_arr(memory, 30, 10);     
   cout << "Sum" << endl;
   print_arr(memory, 40, 10);
-  */    
+  */
+     
   array<string, MEMORY_SIZE> memory;
   for (auto &cell : memory) {
       cell = "0000000000000000";
   }
   
   reading_outfile(memory, filename[1]);      
-  main_loop(memory, 10);    
+  main_loop(memory);    
      
   //disassemble_outfile(filename[1]) ;    
       

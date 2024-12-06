@@ -128,7 +128,7 @@ using namespace std;
    file.close();
  }
  
- void load_program_from_file(const char *filename1, const char *filename2, vector<string> &memory) {
+ void load_program_from_file(const char *filename1, const char *filename2, vector<string> &object_file) {
      vector<string> instructions;
      ifstream file(filename1);
      if(!file.is_open())
@@ -161,7 +161,7 @@ using namespace std;
             cout << "[load_program_from_file]" << __LINE__ <<endl;
             int num = stoi(numbers[i]);
             string machine_code = decimal_to_binary(num, 16);
-            //memory[address++] = machine_code;
+            //object_file[address++] = machine_code;
             instructions.push_back(machine_code);
             
             cout<<"numbers: "<<numbers[i]<<endl;
@@ -174,39 +174,39 @@ using namespace std;
             if(instructions_amount == 0) {
                 cout << "[load_program_from_file]" << __LINE__ <<endl;
                 cout << org_address <<endl;
-                memory.push_back(decimal_to_binary(stoi(org_address), 10));
+                object_file.push_back(decimal_to_binary(stoi(org_address), 10));
             }
             else {
-                memory.push_back(decimal_to_binary(instructions_amount, 10));//количество слов
+                object_file.push_back(decimal_to_binary(instructions_amount, 10));//количество слов
             
                 for(int i = 0; i <= instructions_amount; i++) {//инструкции
-                    memory.push_back(instructions[i]);//
+                    object_file.push_back(instructions[i]);//
                     
                 }
                 instructions.clear();
                     
                 cout << "[load_program_from_file]" << __LINE__ <<endl;
-                memory.push_back(decimal_to_binary(stoi(org_address), 10));
+                object_file.push_back(decimal_to_binary(stoi(org_address), 10));
             }
        }
        
        else if(regex_search(line, match, find_end)) {//END
            org_address = match[1];
-           memory.push_back(decimal_to_binary(stoi(org_address), 10));
+           object_file.insert(object_file.begin(), decimal_to_binary(stoi(org_address), 10));
        }
        
        else {
            string machine_code = regex_converting(line);
            //instructions[address++] = machine_code;
            instructions.push_back(machine_code);
-           //memory.push_back(machine_code);
+           //object_file.push_back(machine_code);
        }       
      }
      
              if(instructions.size() > 0) {
-             memory.push_back(decimal_to_binary(instructions.size(), 10));
+             object_file.push_back(decimal_to_binary(instructions.size(), 10));
              for(int i = 0; i < instructions.size(); i++) {
-                memory.push_back(instructions[i]);
+                object_file.push_back(instructions[i]);
             }
             
         }    
@@ -214,8 +214,8 @@ using namespace std;
      
      ofstream outfile(filename2);
      
-     for(int i = 0; i < memory.size(); i++) {//
-        outfile<<memory[i];
+     for(int i = 0; i < object_file.size(); i++) {//
+        outfile<<object_file[i];
      }
      
      outfile.close();
@@ -226,9 +226,9 @@ using namespace std;
  
  int main(int length, char *filename[]) {
  if(length == 3) {
-   vector<string>memory;
+   vector<string>object_file;
    
-   load_program_from_file(filename[1], filename[2], memory);
+   load_program_from_file(filename[1], filename[2], object_file);
 
    return 0;
   }
