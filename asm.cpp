@@ -140,13 +140,15 @@ using namespace std;
      //regex find_org("^(ORG\\s+(\\d)+(\\s?)+$");
      regex find_org(R"(^ORG\s+(\d+)$)");
      //regex END 
-      
+     regex find_end(R"(^END\s+(\d+)$)");
+     string org_address;
       
      // DATA 42,13  bla-BLA
      while(getline(file,line)){
      //DATA
        cout << line <<endl;
        smatch match;
+      
        if(regex_search(line, match,find_data)){
          //string data_part = line.erase(0,5);
          string data_part = line.substr(5);
@@ -168,7 +170,7 @@ using namespace std;
        }
        else if(regex_search(line, match, find_org)) {//ORG
             int instructions_amount = instructions.size();
-            string org_address = match[1];
+            org_address = match[1];
             if(instructions_amount == 0) {
                 cout << "[load_program_from_file]" << __LINE__ <<endl;
                 cout << org_address <<endl;
@@ -186,6 +188,11 @@ using namespace std;
                 cout << "[load_program_from_file]" << __LINE__ <<endl;
                 memory.push_back(decimal_to_binary(stoi(org_address), 10));
             }
+       }
+       
+       else if(regex_search(line, match, find_end)) {//END
+           org_address = match[1];
+           memory.push_back(decimal_to_binary(stoi(org_address), 10));
        }
        
        else {
