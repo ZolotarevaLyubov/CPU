@@ -739,7 +739,6 @@ string multiply(string a, string b) {
   //  6: add =1
   //  7: br @5
   
-  
   // 20: call 5
   
   else if(code == "0011"){
