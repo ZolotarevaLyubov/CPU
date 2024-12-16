@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <cmath>
+#include <cstring>
 
 using namespace std;
 
@@ -464,27 +465,32 @@ string multiply(string a, string b) {
      buffer << file.rdbuf();
      string commands = buffer.str();
      
- 
-     int origin = (binary_to_decimal(commands.substr(0,10)));
-     int words_amount = binary_to_decimal(commands.substr(10,10));
-     cout << "ORG: " << origin << endl;
-     cout << "Words amount: " << words_amount << endl;
+     int end = binary_to_decimal(commands.substr(0,10));
      
-     int bit_position = 20;
+     int bit_position = 10;
+     while(bit_position < commands.size()) {
+         int origin = binary_to_decimal(commands.substr(bit_position,10));
+         bit_position += 10;
+         int words_amount = binary_to_decimal(commands.substr(bit_position,10));
+         bit_position += 10;
+         
+         cout << "END " << end << endl;
+         cout << "ORG: " << origin << endl;
+         cout << "Words amount: " << words_amount << endl;
      
-      
-     for(int i = 1; i <= words_amount; i++) {
-        if(bit_position + 16 > commands.size()) {
-            cout << "Error: Attempting to read beyond the length of commands." << __LINE__ << endl;
-            break;
-        }
+         for(int i = 1; i <= words_amount; i++) {
+             if(bit_position + 16 > commands.size()) {
+                cout << "Error: Attempting to read beyond the length of commands." << __LINE__ << endl;
+                break;
+             }
         
-        string binary_instruction = commands.substr(bit_position, 16);
-        binary_to_mnemonic(binary_instruction);
-        cout << "  " << binary_instruction << "  " << binary_to_decimal(binary_instruction) << endl;
+         string binary_instruction = commands.substr(bit_position, 16);
+         binary_to_mnemonic(binary_instruction);
+         cout << "  " << binary_instruction << "  " << binary_to_decimal(binary_instruction) << endl;
         
-        bit_position += 16;
+         bit_position += 16;
         
+    }
     }
  }
  
@@ -842,13 +848,13 @@ string multiply(string a, string b) {
   
   //vector<string>memory(1024, "0000000000000000");
   //проверка main_loop (пока не работает))
-  /*
+  
   if(length == 2) {
       cout << "Length: " << length << endl;
       array<string, MEMORY_SIZE> memory;
       reading_outfile(memory, filename[1]);
   
-      main_loop(memory,0);
+      main_loop(memory);
   
       for(int i = 0; i < MEMORY_SIZE; i++){
          if(!memory[i].empty()){
@@ -858,9 +864,13 @@ string multiply(string a, string b) {
   
       return 0;
  }
+  else if(length == 3) {
+      if(strcmp(filename[2],"-disassemble") == 0)
+          disassemble_outfile(filename[1]) ;           // cpu file --disassemble
+  }
  else
      throw logic_error("number of argumens is wrong");
-  */
+  
   
   /*
   array<string, MEMORY_SIZE> memory;
@@ -878,7 +888,7 @@ string multiply(string a, string b) {
   cout << "Sum" << endl;
   print_arr(memory, 40, 10);
   */
-     
+  /*      
   array<string, MEMORY_SIZE> memory;
   for (auto &cell : memory) {
       cell = "0000000000000000";
@@ -886,8 +896,8 @@ string multiply(string a, string b) {
   
   reading_outfile(memory, filename[1]);      
   main_loop(memory);    
-     
-  //disassemble_outfile(filename[1]) ;    
+  */       
+      
       
  }
 
