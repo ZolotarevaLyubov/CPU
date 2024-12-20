@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <regex>
@@ -42,7 +43,7 @@ using namespace std;
      command_map ["MUL"] = "1010";
      command_map ["DIV"] = "1011";
    
-   regex pattern(R"(^([A-Z]+)\s+([$@=]?)(\d+)+(\s?)+$)");   
+   regex pattern(R"(^([A-Z]+)\s+([$@=]?)((\d+)|([A-Z]+))(\s?)+$)");   
    regex pattern_without_operand("^HALT$");
    
    smatch matches;
@@ -127,6 +128,20 @@ using namespace std;
    }
    file.close();
  }
+ 
+ vector<pair <string, string>> load_program_with_labels (const char *filename1) {
+     vector<string> instructions;
+     ifstream file(filename1);
+     if(!file.is_open())
+         cout<<"error: load_program_from_file"<<endl;
+       
+     string line;//текущая строка
+     
+     regex with_label(R"^([A-Z]+)\s");
+     regex without_label(R"^((\s)+)");
+     
+     
+ }  
  
  void load_program_from_file(const char *filename1, const char *filename2, vector<string> &object_file) {
      vector<string> instructions;
