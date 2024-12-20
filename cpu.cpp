@@ -541,7 +541,7 @@ string multiply(string a, string b) {
     // Базовый адрес массива: 20
     // Адрес для сохранения максимального значения: 1
 
-    // Инициализация программы
+    
     memory[2] = make_instr("LOAD", "$", 20);   
     memory[3] = make_instr("STORE", " ", 1); 
     memory[4] = make_instr("LOAD", "=", 0);  
@@ -567,7 +567,7 @@ string multiply(string a, string b) {
 
     memory[19] = make_instr("HALT", " ", 0);  
 
-    // Инициализация массива
+
     memory[20] = decimal_to_binary(100, 16);
     memory[21] = decimal_to_binary(183, 16);
     memory[22] = decimal_to_binary(73, 16);
@@ -605,26 +605,37 @@ string multiply(string a, string b) {
      
      int end = stoi(commands.substr(0,10), NULL, 2);
      PROGRAM_COUNTER = end;
-     int origin = stoi(commands.substr(10,10), NULL, 2);
-     int words_amount = stoi(commands.substr(20,10), NULL, 2);
+     //int origin = stoi(commands.substr(10,10), NULL, 2);
+     //int words_amount = stoi(commands.substr(20,10), NULL, 2);
      //...
      
-     int bit_position = 30;
-     address = origin;
-      
-     for(int i = 1; i <= words_amount; i++) {
-        if(bit_position + 16 > commands.size()) {
-            cout << "Error: Attempting to read beyond the length of commands." << endl;
-            break;
+     int bit_position = 10;
+     
+     while (bit_position < commands.size()) { 
+     
+         int origin = binary_to_decimal(commands.substr(bit_position, 10));
+         bit_position += 10;
+         int words_amount = binary_to_decimal(commands.substr(bit_position, 10));
+         bit_position += 10;
+         address = origin;
+         for(int i = 1; i <= words_amount; i++) {
+             if(bit_position + 16 > commands.size()) {
+                 cout << "Error: Attempting to read beyond the length of commands." << endl;
+             break;
         }
         
-        string command = commands.substr(bit_position, 16);
-        memory[address] = command;
-        address++;
-        bit_position += 16;    
+         string command = commands.substr(bit_position, 16);
+         memory[address] = command;
+         address++;
+         bit_position += 16;    
         
-        cout << "Bit position: " << bit_position << endl;
-        cout << "Length of commands: " << commands.size() << endl;
+         cout << "Bit position: " << bit_position << endl;
+         cout << "Length of commands: " << commands.size() << endl;
+         }
+         
+         cout << "ORIGIN: " << origin <<endl;
+         cout << "WORDS AMOUNT: " << words_amount <<endl;
+     
      }
      /*
      for(int j = 0; j < MEMORY_SIZE; j++) {
@@ -634,8 +645,6 @@ string multiply(string a, string b) {
      }
      */
      
-     cout << "ORIGIN: " << origin <<endl;
-     cout << "WORDS AMOUNT: " << words_amount <<endl;
      
      file.close();              
  }
