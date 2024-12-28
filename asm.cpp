@@ -137,9 +137,13 @@ using namespace std;
        
      string line;//текущая строка
      
-     regex with_label(R"^([A-Z]+)\s");
-     regex without_label(R"^((\s)+)");
+     regex with_label(R"^([A-Z]+)\s+(.+)$");
+     regex without_label(R"^((\s)*(.+)$)");
      //regex org,data,end
+     
+     while(getline(file, line)) {
+         smatch match;
+     }
      
  }  
  
