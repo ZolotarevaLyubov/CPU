@@ -1,0 +1,94 @@
+{ " ",   }
+match:      LOAD N
+match:      LOAD N
+match:  
+match: LOAD N
+{ " ",   }
+match:      STORE 15
+match:      STORE 15
+match:  
+match: STORE 15
+{ " ",   }
+match:      LOAD 16
+match:      LOAD 16
+match:  
+match: LOAD 16
+{ LOOP, STORE 17 }
+match: LOOP STORE 17
+match: LOOP
+match: STORE 17
+{ " ",   }
+match:      LOAD 15
+match:      LOAD 15
+match:  
+match: LOAD 15
+{ " ",   }
+match:      MUL 17
+match:      MUL 17
+match:  
+match: MUL 17
+{ " ",   }
+match:      STORE 17
+match:      STORE 17
+match:  
+match: STORE 17
+{ " ",   }
+match:      LOAD 15
+match:      LOAD 15
+match:  
+match: LOAD 15
+{ " ",   }
+match:      SUB 18
+match:      SUB 18
+match:  
+match: SUB 18
+{ " ",   }
+match:      STORE 15
+match:      STORE 15
+match:  
+match: STORE 15
+{ " ",   }
+match:      LOAD 15
+match:      LOAD 15
+match:  
+match: LOAD 15
+{ " ",   }
+match:      BREQ 13
+match:      BREQ 13
+match:  
+match: BREQ 13
+{ " ",   }
+match:      BR LOOP
+match:      BR LOOP
+match:  
+match: BR LOOP
+{ " ",   }
+match:      HALT
+match:      HALT
+match:  
+match: HALT
+{ N, DATA 5 }
+match: N    DATA 5
+match: N
+match: DATA 5
+{ " ",   }
+match:      DATA 1,1,1,1
+match:      DATA 1,1,1,1
+match:  
+match: DATA 1,1,1,1
+{ ,   }
+{ ,   }
+{ ,   }
+{ LOOP, STORE 17 }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ ,   }
+{ N, DATA 5 }
+{ ,   }

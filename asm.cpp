@@ -8,6 +8,8 @@
 #include <format>
 #include <array>
 #include <stdexcept>
+#include <vector>
+#include <utility>
 
 using namespace std;
  
@@ -130,22 +132,50 @@ using namespace std;
  }
  
  vector<pair <string, string>> load_program_with_labels (const char *filename1) {
-     vector<string> instructions;
+     vector<pair <string, string>> instructions;
      ifstream file(filename1);
      if(!file.is_open())
          cout<<"error: load_program_from_file"<<endl;
        
      string line;//текущая строка
      
-     regex with_label(R"^([A-Z]+)\s+(.+)$");
-     regex without_label(R"^((\s)*(.+)$)");
+     regex with_label(R"(^([A-Z]+)\s+(.+)$)");
+     regex without_label(R"(^((\s)*(.+)$))");
      //regex org,data,end
-     
+     smatch match;
+          
      while(getline(file, line)) {
-         smatch match;
+              
+         if(regex_match(line, match, with_label)) {
+              string label = match[1].str();
+              string command = match[2].str();
+              //cout << "{ " << label << ", " << command << " }" << endl;
+              instructions.emplace_back(label, command);    
+              
+     }
+         else if(regex_match(line, match, without_label)) {
+             string command = match[1].str();
+             //cout << "{ " << "\" \"" << ", " << command << " }" << endl;
+             instructions.emplace_back("", command);
+         }
+         /*
+         for (int i = 0;  i < match.size(); i++) {
+             cout << "match: "<< match[i].str() << endl;
+         }     
+         */
      }
      
+    
+     file.close();
+     return instructions;
  }  
+ 
+ void pair_print (vector<pair <string, string>> instructions ) {
+  
+     for(const pair n : instructions) {
+         cout << "{ " << n.first << ", " << n.second << " }" << endl;
+     }
+ }
  
  void load_program_from_file(const char *filename1, const char *filename2, vector<string> &object_file) {
      vector<string> instructions;
@@ -247,10 +277,13 @@ using namespace std;
  if(length == 3) {
    vector<string>object_file;
    
-   load_program_from_file(filename[1], filename[2], object_file);
-
+   //load_program_from_file(filename[1], filename[2], object_file);
+   
+   pair_print(load_program_with_labels(filename[1]));
+   
    return 0;
   }
+  
  else
    throw logic_error("number of arguments is wrong"); 
   
