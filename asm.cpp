@@ -14,6 +14,7 @@
 using namespace std;
  
  
+ unordered_map<string, int> label_table;
  //const int MEMORY_SIZE = 256;
  
  string decimal_to_binary(int num, int bit_width) {
@@ -129,6 +130,14 @@ using namespace std;
       cout<<regex_converting(line)<<endl;
    }
    file.close();
+ }
+ 
+ void add_label(string label, int address) {
+     label_table[label] = address;
+ }
+ 
+ void find_label(string label) {
+     return label_table[label];
  }
  
  vector<pair <string, string>> load_program_with_labels (const char *filename1) {
