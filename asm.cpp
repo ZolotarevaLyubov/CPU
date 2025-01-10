@@ -31,7 +31,7 @@ using namespace std;
    return binary;
  }
 
- string regex_converting(const string &mnemonic){
+ string regex_converting(const string &mnemonic,){
    unordered_map<string, string> command_map;
      command_map ["HALT"] = "0000";
      command_map ["LOAD"] = "0001";
@@ -136,10 +136,15 @@ using namespace std;
      label_table[label] = address;
  }
  
- void find_label(string label) {
+ int find_label(string label) {
      return label_table[label];
  }
  
+ void print_label_table() {
+     for(const auto entry : label_table) {
+         cout << "label: " << entry.first << "  " << "address: " << entry.second << endl;
+     }
+ }
  
  vector<pair <string, string>> load_program_with_labels (const char *filename1) {
      vector<pair <string, string>> instructions;
@@ -153,6 +158,7 @@ using namespace std;
      regex without_label(R"(^((\s)*(.+)$))");
      //regex org,data,end
      smatch match;
+     int address = 0;
           
      while(getline(file, line)) {
               
@@ -160,7 +166,9 @@ using namespace std;
               string label = match[1].str();
               string command = match[2].str();
               //cout << "{ " << label << ", " << command << " }" << endl;
-              instructions.emplace_back(label, command);    
+              instructions.emplace_back(label, command);  
+              
+              add_label(label, address);  
               
      }
          else if(regex_match(line, match, without_label)) {
@@ -168,6 +176,7 @@ using namespace std;
              //cout << "{ " << "\" \"" << ", " << command << " }" << endl;
              instructions.emplace_back("", command);
          }
+         address++; 
          /*
          for (int i = 0;  i < match.size(); i++) {
              cout << "match: "<< match[i].str() << endl;
@@ -200,6 +209,7 @@ using namespace std;
      regex find_org(R"(^ORG\s+(\d+)$)");
      //regex END 
      regex find_end(R"(^END\s+(\d+)$)");
+     //regex find_command_with_label()
      string org_address;
       
      // DATA 42,13  bla-BLA
@@ -254,6 +264,8 @@ using namespace std;
            object_file.insert(object_file.begin(), decimal_to_binary(stoi(org_address), 10));
        }
        
+       //else if()
+       
        else {
            string machine_code = regex_converting(line);
            //instructions[address++] = machine_code;
@@ -289,7 +301,9 @@ using namespace std;
    
    //load_program_from_file(filename[1], filename[2], object_file);
    
-   pair_print(load_program_with_labels(filename[1]));
+   //pair_print(load_program_with_labels(filename[1]));
+   load_program_with_labels(filename[1]);
+   print_label_table();
    
    return 0;
   }

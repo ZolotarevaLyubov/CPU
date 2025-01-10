@@ -1,3 +1,4 @@
+     ORG 10
      LOAD N
      STORE 15
      LOAD 16
