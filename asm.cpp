@@ -31,7 +31,7 @@ using namespace std;
    return binary;
  }
 
- string regex_converting(const string &mnemonic,){
+ string regex_converting(const string &mnemonic){
    unordered_map<string, string> command_map;
      command_map ["HALT"] = "0000";
      command_map ["LOAD"] = "0001";
@@ -156,13 +156,18 @@ using namespace std;
      
      regex with_label(R"(^([A-Z]+)\s+(.+)$)");
      regex without_label(R"(^((\s)*(.+)$))");
-     //regex org,data,end
+     
+     regex org_regex(R"(^\s*ORG\s+(\d+)$)");//regex org,data,end
      smatch match;
      int address = 0;
           
      while(getline(file, line)) {
-              
-         if(regex_match(line, match, with_label)) {
+         if (regex_match(line, match, org_regex)) {
+             // Если строка содержит ORG
+             address = stoi(match[1].str());
+             instructions.emplace_back("", line);
+         }
+         else if(regex_match(line, match, with_label)) {
               string label = match[1].str();
               string command = match[2].str();
               //cout << "{ " << label << ", " << command << " }" << endl;
