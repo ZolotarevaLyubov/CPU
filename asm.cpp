@@ -53,7 +53,7 @@ using namespace std;
    if(regex_match(mnemonic, matches, pattern)){
         string command = matches[1];
         string symbol = matches[2];
-        string num = matches[3];
+        string num_or_label = matches[3];
    
      //string binary_word;
      
@@ -73,11 +73,21 @@ using namespace std;
            address_mode_binary = "00";
                
         cout << "[regex_converting]" << __LINE__ <<endl;   
-        string binary_number = bitset<10>(stoi(num)).to_string();
+        
+        string binary_number;
+        
+        if(regex_match(num_or_label, regex("^[A-Z]+$"))) {
+            if(label_table.find(num_or_label) != label_table.end()) {
+                int address = label_table[num_or_label];
+                binary_number = bitset<10>(address).to_string();
+                cout << "label was find: " << num_or_label << "; " << " and address: " << address << endl;
+            }
+        }
+            binary_number = bitset<10>(stoi(num_or_label)).to_string();
         
         cout<<"(r_c)command: "<<command<<endl;
         cout<<"(r_c)symbol: "<<symbol<<endl; 
-        cout<<"(r_c)num: "<<num<<endl;
+        cout<<"(r_c)num: "<<num_or_label<<endl;
         
         cout<<"(r_c)result: "<<binary_command+address_mode_binary+binary_number<<endl;
         
@@ -307,7 +317,7 @@ using namespace std;
    
    //pair_print(load_program_with_labels(filename[1]));
    load_program_with_labels(filename[1]);
-   print_label_table();
+   //print_label_table();
    
    return 0;
   }
