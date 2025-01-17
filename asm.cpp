@@ -183,15 +183,17 @@ using namespace std;
               //cout << "{ " << label << ", " << command << " }" << endl;
               instructions.emplace_back(label, command);  
               
-              add_label(label, address);  
+              add_label(label, address); 
+              address++; 
               
      }
          else if(regex_match(line, match, without_label)) {
              string command = match[1].str();
              //cout << "{ " << "\" \"" << ", " << command << " }" << endl;
              instructions.emplace_back("", command);
+             address++;
          }
-         address++; 
+        
          /*
          for (int i = 0;  i < match.size(); i++) {
              cout << "match: "<< match[i].str() << endl;
@@ -202,6 +204,13 @@ using namespace std;
      file.close();
      return instructions;
  }  
+ /*
+ vector<string> making_old_format (vector<pair<string, string>>) {
+     vector<string> instructions;
+     
+     
+ }
+ */
  
  void pair_print (vector<pair <string, string>> instructions ) {
   
@@ -315,10 +324,13 @@ using namespace std;
    
    //load_program_from_file(filename[1], filename[2], object_file);
    
-   //pair_print(load_program_with_labels(filename[1]));
-   load_program_with_labels(filename[1]);
-   //print_label_table();
    
+   load_program_with_labels(filename[1]);
+   cout << "LABEL TABLE PRINT:  " << endl;
+   print_label_table();
+   
+   cout << " PAIR PRINT: " << endl;
+   pair_print(load_program_with_labels(filename[1]));
    return 0;
   }
   
