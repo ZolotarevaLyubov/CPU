@@ -77,6 +77,7 @@ using namespace std;
         string binary_number;
         
         if(regex_match(num_or_label, regex("^[A-Z]+$"))) {
+            
             if(label_table.find(num_or_label) != label_table.end()) {
                 int address = label_table[num_or_label];
                 binary_number = bitset<10>(address).to_string();
