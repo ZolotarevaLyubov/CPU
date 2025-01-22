@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <regex>
@@ -330,12 +329,6 @@ string multiply(string a, string b) {
    return increment(res);
  }
  
- /*
- числа фибоначчи
- 1,1,2,3,5,8
- 1,2,3,4,5,6
- fib(6)=8
- */
  
  void complement_sub(string minuend, string subtrahend){
    
@@ -644,8 +637,7 @@ string multiply(string a, string b) {
          }
      }
      */
-     
-     
+      
      file.close();              
  }
 

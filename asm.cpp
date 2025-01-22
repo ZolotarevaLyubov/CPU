@@ -163,7 +163,7 @@ using namespace std;
      if(!file.is_open())
          cout<<"error: load_program_from_file"<<endl;
        
-     string line;//текущая строка
+     string line;
      
      regex with_label(R"(^([A-Z]+)\s+(.+)$)");
      regex without_label(R"(^((\s)*(.+)$))");
@@ -233,7 +233,7 @@ using namespace std;
      regex find_org(R"(^ORG\s+(\d+)$)");
      //regex END 
      regex find_end(R"(^END\s+(\d+)$)");
-     //regex find_command_with_label()
+    
      string org_address;
       
      // DATA 42,13  bla-BLA
@@ -309,12 +309,11 @@ using namespace std;
      
      ofstream outfile(filename2);
      
-     for(int i = 0; i < object_file.size(); i++) {//
+     for(int i = 0; i < object_file.size(); i++) {
         outfile<<object_file[i];
      }
      
      outfile.close();
-     
      
      file.close();
  }
@@ -324,7 +323,6 @@ using namespace std;
    vector<string>object_file;
    
    //load_program_from_file(filename[1], filename[2], object_file);
-   
    
    load_program_with_labels(filename[1]);
    cout << "LABEL TABLE PRINT:  " << endl;
