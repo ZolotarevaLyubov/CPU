@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <vector>
 #include <utility>
+#include <sstream>
 
 using namespace std;
  
@@ -205,13 +206,33 @@ using namespace std;
      file.close();
      return instructions;
  }  
- /*
- vector<string> making_old_format (vector<pair<string, string>>) {
+ 
+ vector<string> making_old_format (vector<pair<string, string>> instructions_with_label) {
      vector<string> instructions;
      
-     
+     for (int i = 0; i < instructions_with_label.size(); i++) {
+         string label = instructions_with_label[i].first;
+         string instruction = instructions_with_label[i].second;
+         
+         istringstream iss(instruction);
+         string command, operand;
+         iss >> command >> operand;
+         
+         if (!operand.empty() && label_table.count(operand)) {
+             operand = to_string(label_table[operand]);
+         }
+         
+         if (!operand.empty()) {
+             instructions.push_back(command + " " + operand);
+         }
+         
+         else {
+             instructions.push_back(command);
+         }
+     }
+     return instructions;
  }
- */
+ 
  
  void pair_print (vector<pair <string, string>> instructions ) {
   
@@ -330,6 +351,13 @@ using namespace std;
    
    cout << " PAIR PRINT: " << endl;
    pair_print(load_program_with_labels(filename[1]));
+   
+   cout << "VECTOR INSTRUCTIONS: " << endl;
+   vector<string> final_instructions = making_old_format(load_program_with_labels(filename[1]));
+   for (size_t i = 0; i < final_instructions.size(); i++) {
+       cout << "[" << i << "]" << final_instructions[i] << endl;
+   }
+   
    return 0;
   }
   
