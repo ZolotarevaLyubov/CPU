@@ -16,7 +16,7 @@ using namespace std;
  
  
  unordered_map<string, int> label_table;
- //const int MEMORY_SIZE = 256;
+
  
  string decimal_to_binary(int num, int bit_width) {
    string binary(bit_width, '0');
@@ -290,6 +290,7 @@ using namespace std;
                 cout << org_address <<endl;
                 object_file.push_back(decimal_to_binary(stoi(org_address), 10));
             }
+            
             else {
                 object_file.push_back(decimal_to_binary(instructions_amount, 10));//количество слов
             
@@ -309,7 +310,6 @@ using namespace std;
            object_file.insert(object_file.begin(), decimal_to_binary(stoi(org_address), 10));
        }
        
-       //else if()
        
        else {
            string machine_code = regex_converting(line);
